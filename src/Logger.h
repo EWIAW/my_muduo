@@ -1,26 +1,30 @@
-// 编写日志信息类
 #pragma once
+#include <time.h>
+#include <stdio.h>
 
-#include <string>
+// 定义日志等级
+#define INF "INFORMATION" // 信息日志宏
+#define DBG "DEBUG"       // 调试日志宏
+#define ERR "ERRO"        // 错误日志宏
 
-#include "noncopyable.h"
+// 默认日志等级为信息类日志
+#define DEFAULT_LOG_LEVEL INF
 
-enum Log_Level
-{
-    INFO,  // 信息日志
-    DEBUG, // 调式日志
-    ERROR, // 错误日志，但不影响后续的运行
-    FATAL  // 致命错误，导致程序直接崩溃
-};
+// 日志宏函数
+// 需要输出            时间        文件名 第几行    日志信息
+// 例如      [2024-10-27 21:50:43 log.hpp:34][DEBUG] message
+#define LOG(LEVEL, format, ...)                                                                           \
+    do                                                                                                    \
+    {                                                                                                     \
+        if (DEFAULT_LOG_LEVEL > LEVEL)                                                                    \
+            break;                                                                                        \
+        time_t tp = time(nullptr);                                                                        \
+        struct tm *lt = localtime(&tp);                                                                   \
+        char buffer[32];                                                                                  \
+        size_t n = strftime(buffer, sizeof(buffer) - 1, "%Y-%m-%d %H:%M:%S", lt);                         \
+        fprintf(stdout, "[%s %s:%d][%s] " format "\n", buffer, __FILE__, __LINE__, LEVEL, ##__VA_ARGS__); \
+    } while (0)
 
-// 将日志类设计为单例模式
-class Logger : noncopyable
-{
-public:
-    static Logger &Instance();
-    void Set_Log_Level(int level);
-    void Log(std::string message);
-
-private:
-    int log_level_; // 日志等级
-};
+#define ILOG(format, ...) LOG(INF, format, ##__VA_ARGS__)
+#define DLOG(format, ...) LOG(DBG, format, ##__VA_ARGS__)
+#define ELOG(format, ...) LOG(ERR, format, ##__VA_ARGS__)

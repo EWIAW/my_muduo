@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/zrb/my_muduo/my_muduo/src/InetAddress.h
+arpa/inet.h
+-
+netinet/in.h
+-
+strings.h
+-
+string
+-
+
+/home/zrb/my_muduo/my_muduo/src/Logger.h
+time.h
+-
+stdio.h
+-
+
+/home/zrb/my_muduo/my_muduo/src/Timestamp.h
+iostream
+-
+string
+-
+
+/home/zrb/my_muduo/my_muduo/src/test.cc
+iostream
+-
+Logger.h
+/home/zrb/my_muduo/my_muduo/src/Logger.h
+Timestamp.h
+/home/zrb/my_muduo/my_muduo/src/Timestamp.h
+InetAddress.h
+/home/zrb/my_muduo/my_muduo/src/InetAddress.h
+
