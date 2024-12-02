@@ -23,6 +23,10 @@ include_directories(${PROJECT_SOURCE_DIR})
 
 # 定义源文件
 set(SOURCES
+    Channel.cc
+    DefaultPollPoller.cc
+    EPollPoller.cc
+    Eventloop.cc
     main.cc
     Timestamp.cc
     InetAddress.cc
