@@ -20,7 +20,7 @@ public:
 
     // 给所有IO复用保留统一的接口
     virtual Timestamp poll(int timeoutMs, ChannelLists *activeChannel) = 0;
-    virtual void updataChannel(Channel *channel) = 0;
+    virtual void updateChannel(Channel *channel) = 0;
     virtual void removeChannel(Channel *Channel) = 0;
 
     // 判断channel是否在poller中

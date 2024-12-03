@@ -19,8 +19,8 @@ public:
 
     // 重写基类Poller抽象方法
     Timestamp poll(int timeoutMs, ChannelLists *activeChannel) override;
-    void updataChannel(Channel *channel) override;
-    void removeChannel(Channel *Channel) override;
+    void updateChannel(Channel *channel) override;
+    void removeChannel(Channel *channel) override;
 
 private:
     // 用于初始化EventList的大小

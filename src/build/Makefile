@@ -114,6 +114,126 @@ my_program/fast:
 	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/build
 .PHONY : my_program/fast
 
+Channel.o: Channel.cc.o
+.PHONY : Channel.o
+
+# target to build an object file
+Channel.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Channel.cc.o
+.PHONY : Channel.cc.o
+
+Channel.i: Channel.cc.i
+.PHONY : Channel.i
+
+# target to preprocess a source file
+Channel.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Channel.cc.i
+.PHONY : Channel.cc.i
+
+Channel.s: Channel.cc.s
+.PHONY : Channel.s
+
+# target to generate assembly for a file
+Channel.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Channel.cc.s
+.PHONY : Channel.cc.s
+
+CurrentThread.o: CurrentThread.cc.o
+.PHONY : CurrentThread.o
+
+# target to build an object file
+CurrentThread.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/CurrentThread.cc.o
+.PHONY : CurrentThread.cc.o
+
+CurrentThread.i: CurrentThread.cc.i
+.PHONY : CurrentThread.i
+
+# target to preprocess a source file
+CurrentThread.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/CurrentThread.cc.i
+.PHONY : CurrentThread.cc.i
+
+CurrentThread.s: CurrentThread.cc.s
+.PHONY : CurrentThread.s
+
+# target to generate assembly for a file
+CurrentThread.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/CurrentThread.cc.s
+.PHONY : CurrentThread.cc.s
+
+DefaultPoller.o: DefaultPoller.cc.o
+.PHONY : DefaultPoller.o
+
+# target to build an object file
+DefaultPoller.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/DefaultPoller.cc.o
+.PHONY : DefaultPoller.cc.o
+
+DefaultPoller.i: DefaultPoller.cc.i
+.PHONY : DefaultPoller.i
+
+# target to preprocess a source file
+DefaultPoller.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/DefaultPoller.cc.i
+.PHONY : DefaultPoller.cc.i
+
+DefaultPoller.s: DefaultPoller.cc.s
+.PHONY : DefaultPoller.s
+
+# target to generate assembly for a file
+DefaultPoller.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/DefaultPoller.cc.s
+.PHONY : DefaultPoller.cc.s
+
+EPollPoller.o: EPollPoller.cc.o
+.PHONY : EPollPoller.o
+
+# target to build an object file
+EPollPoller.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/EPollPoller.cc.o
+.PHONY : EPollPoller.cc.o
+
+EPollPoller.i: EPollPoller.cc.i
+.PHONY : EPollPoller.i
+
+# target to preprocess a source file
+EPollPoller.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/EPollPoller.cc.i
+.PHONY : EPollPoller.cc.i
+
+EPollPoller.s: EPollPoller.cc.s
+.PHONY : EPollPoller.s
+
+# target to generate assembly for a file
+EPollPoller.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/EPollPoller.cc.s
+.PHONY : EPollPoller.cc.s
+
+Eventloop.o: Eventloop.cc.o
+.PHONY : Eventloop.o
+
+# target to build an object file
+Eventloop.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Eventloop.cc.o
+.PHONY : Eventloop.cc.o
+
+Eventloop.i: Eventloop.cc.i
+.PHONY : Eventloop.i
+
+# target to preprocess a source file
+Eventloop.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Eventloop.cc.i
+.PHONY : Eventloop.cc.i
+
+Eventloop.s: Eventloop.cc.s
+.PHONY : Eventloop.s
+
+# target to generate assembly for a file
+Eventloop.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Eventloop.cc.s
+.PHONY : Eventloop.cc.s
+
 InetAddress.o: InetAddress.cc.o
 .PHONY : InetAddress.o
 
@@ -137,6 +257,54 @@ InetAddress.s: InetAddress.cc.s
 InetAddress.cc.s:
 	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/InetAddress.cc.s
 .PHONY : InetAddress.cc.s
+
+Poller.o: Poller.cc.o
+.PHONY : Poller.o
+
+# target to build an object file
+Poller.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Poller.cc.o
+.PHONY : Poller.cc.o
+
+Poller.i: Poller.cc.i
+.PHONY : Poller.i
+
+# target to preprocess a source file
+Poller.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Poller.cc.i
+.PHONY : Poller.cc.i
+
+Poller.s: Poller.cc.s
+.PHONY : Poller.s
+
+# target to generate assembly for a file
+Poller.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Poller.cc.s
+.PHONY : Poller.cc.s
+
+Tcpserver.o: Tcpserver.cc.o
+.PHONY : Tcpserver.o
+
+# target to build an object file
+Tcpserver.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Tcpserver.cc.o
+.PHONY : Tcpserver.cc.o
+
+Tcpserver.i: Tcpserver.cc.i
+.PHONY : Tcpserver.i
+
+# target to preprocess a source file
+Tcpserver.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Tcpserver.cc.i
+.PHONY : Tcpserver.cc.i
+
+Tcpserver.s: Tcpserver.cc.s
+.PHONY : Tcpserver.s
+
+# target to generate assembly for a file
+Tcpserver.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Tcpserver.cc.s
+.PHONY : Tcpserver.cc.s
 
 Timestamp.o: Timestamp.cc.o
 .PHONY : Timestamp.o
@@ -162,29 +330,29 @@ Timestamp.cc.s:
 	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Timestamp.cc.s
 .PHONY : Timestamp.cc.s
 
-test.o: test.cc.o
-.PHONY : test.o
+main.o: main.cc.o
+.PHONY : main.o
 
 # target to build an object file
-test.cc.o:
-	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/test.cc.o
-.PHONY : test.cc.o
+main.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/main.cc.o
+.PHONY : main.cc.o
 
-test.i: test.cc.i
-.PHONY : test.i
+main.i: main.cc.i
+.PHONY : main.i
 
 # target to preprocess a source file
-test.cc.i:
-	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/test.cc.i
-.PHONY : test.cc.i
+main.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/main.cc.i
+.PHONY : main.cc.i
 
-test.s: test.cc.s
-.PHONY : test.s
+main.s: main.cc.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-test.cc.s:
-	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/test.cc.s
-.PHONY : test.cc.s
+main.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/main.cc.s
+.PHONY : main.cc.s
 
 # Help Target
 help:
@@ -195,15 +363,36 @@ help:
 	@echo "... edit_cache"
 	@echo "... my_program"
 	@echo "... rebuild_cache"
+	@echo "... Channel.o"
+	@echo "... Channel.i"
+	@echo "... Channel.s"
+	@echo "... CurrentThread.o"
+	@echo "... CurrentThread.i"
+	@echo "... CurrentThread.s"
+	@echo "... DefaultPoller.o"
+	@echo "... DefaultPoller.i"
+	@echo "... DefaultPoller.s"
+	@echo "... EPollPoller.o"
+	@echo "... EPollPoller.i"
+	@echo "... EPollPoller.s"
+	@echo "... Eventloop.o"
+	@echo "... Eventloop.i"
+	@echo "... Eventloop.s"
 	@echo "... InetAddress.o"
 	@echo "... InetAddress.i"
 	@echo "... InetAddress.s"
+	@echo "... Poller.o"
+	@echo "... Poller.i"
+	@echo "... Poller.s"
+	@echo "... Tcpserver.o"
+	@echo "... Tcpserver.i"
+	@echo "... Tcpserver.s"
 	@echo "... Timestamp.o"
 	@echo "... Timestamp.i"
 	@echo "... Timestamp.s"
-	@echo "... test.o"
-	@echo "... test.i"
-	@echo "... test.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 

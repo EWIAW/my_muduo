@@ -3,9 +3,9 @@
 #include "Channel.h"
 
 // 保存事件可读可写的状态
-const int kNoneEvent = 0;
-const int kReadEvent = EPOLLIN | EPOLLPRI;
-const int kWriteEvent = EPOLLOUT;
+const int Channel::kNoneEvent = 0;
+const int Channel::kReadEvent = EPOLLIN | EPOLLPRI;
+const int Channel::kWriteEvent = EPOLLOUT;
 
 Channel::Channel(Eventloop *loop, int fd)
     : _loop_(loop),

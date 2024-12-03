@@ -1,4 +1,3 @@
-#pragma once
 #include <stdlib.h>
 #include "Poller.h"
 #include "EPollPoller.h"
@@ -12,7 +11,7 @@ Poller *Poller::newDefaultPoller(Eventloop *loop)
     }
     else
     {
-        return EPollPoller(loop); // 生成epoll实例
+        return new EPollPoller(loop); // 生成epoll实例
     }
 }
  

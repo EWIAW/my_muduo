@@ -24,12 +24,15 @@ include_directories(${PROJECT_SOURCE_DIR})
 # 定义源文件
 set(SOURCES
     Channel.cc
-    DefaultPollPoller.cc
+    CurrentThread.cc
+    DefaultPoller.cc
     EPollPoller.cc
     Eventloop.cc
-    main.cc
-    Timestamp.cc
     InetAddress.cc
+    main.cc
+    Poller.cc
+    Tcpserver.cc
+    Timestamp.cc
 )
 
 # 添加可执行文件
