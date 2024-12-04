@@ -23,8 +23,12 @@ CMakeFiles/my_program.dir/EPollPoller.cc.o: ../Poller.h
 CMakeFiles/my_program.dir/EPollPoller.cc.o: ../Timestamp.h
 CMakeFiles/my_program.dir/EPollPoller.cc.o: ../noncopyable.h
 
+CMakeFiles/my_program.dir/Eventloop.cc.o: ../CurrentThread.h
 CMakeFiles/my_program.dir/Eventloop.cc.o: ../Eventloop.cc
 CMakeFiles/my_program.dir/Eventloop.cc.o: ../Eventloop.h
+CMakeFiles/my_program.dir/Eventloop.cc.o: ../Poller.h
+CMakeFiles/my_program.dir/Eventloop.cc.o: ../Timestamp.h
+CMakeFiles/my_program.dir/Eventloop.cc.o: ../noncopyable.h
 
 CMakeFiles/my_program.dir/InetAddress.cc.o: ../InetAddress.cc
 CMakeFiles/my_program.dir/InetAddress.cc.o: ../InetAddress.h
