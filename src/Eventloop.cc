@@ -1,18 +1,159 @@
+#include <sys/eventfd.h>
+
+#include <string.h>
+
 #include "Eventloop.h"
 #include "Channel.h"
+#include "Logger.h"
+
+// 防止一个线程创建多个eventloop thread_local
+__thread Eventloop *t_loopInThisThread = nullptr;
+
+// 定义epoll_wait所设置的超时时间
+const int kPollTimeMs = 10000;
+
+// 创建wakeupfd，用来唤醒subloop来处理新的channel
+int createEventFd()
+{
+    int evtfd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
+    if (evtfd < 0)
+    {
+        LOG_DEBUG("create eventfd failed , errno : %d , reason : %s", errno, strerror(errno));
+    }
+    return evtfd;
+}
 
 Eventloop::Eventloop()
     : _looping_(false),
       _quit_(false),
       _threadId_(CurrentThread::tid()),
-      _pollReturnTIme_(0),
+      // _pollReturnTIme_(0),
       _poller_(Poller::newDefaultPoller(this)),
-      _wakeupFd_(0),
+      _wakeupFd_(createEventFd()),
       _wakeupChannel_(new Channel(this, _wakeupFd_)),
       _callingPendingFunctors_(false)
 {
+    if (t_loopInThisThread != nullptr)
+    {
+        LOG_FATAL("");
+    }
+    else
+    {
+        t_loopInThisThread = this;
+    }
+    _wakeupChannel_->SetReadCallback(std::bind(&Eventloop::handlerRead, this));
+    _wakeupChannel_->EnableReading();
 }
 
 Eventloop::~Eventloop()
 {
+    _wakeupChannel_->DisableAll();
+    _wakeupChannel_->remove();
+    close(_wakeupFd_);
+    t_loopInThisThread = nullptr;
+}
+
+void Eventloop::loop() // 开启事件循环
+{
+    _looping_ = true;
+    _quit_ = false;
+    while (!_quit_)
+    {
+        _activeChannels_.clear();
+        _pollReturnTIme_ = _poller_->poll(kPollTimeMs, &_activeChannels_);
+        for (Channel *channel : _activeChannels_)
+        {
+            channel->HandlerEvent(_pollReturnTIme_);
+        }
+        doPendingFunctor();
+    }
+    _looping_ = true;
+}
+
+void Eventloop::quit() // 退出事件循环
+{
+    _quit_ = false;
+    if (!isInLoopThread())
+    {
+        wakeup();
+    }
+}
+
+// 在当前loop中执行回调
+void Eventloop::runInLoop(Functor cb)
+{
+    if (isInLoopThread())
+    {
+        cb();
+    }
+    else
+    {
+        queueInLoop(cb);
+    }
+}
+
+// 把cb放入队列中，唤醒loop所在线程，执行cb
+void Eventloop::queueInLoop(Functor cb)
+{
+    {
+        std::unique_lock<std::mutex> lock(_mutex_);
+        _pendingFunctors_.emplace_back(cb);
+    }
+
+    if (!isInLoopThread() || _callingPendingFunctors_)
+    {
+        wakeup();
+    }
+}
+
+void Eventloop::handlerRead() // wake up
+{
+    uint64_t one = 1;
+    ssize_t n = read(_wakeupFd_, &one, sizeof(one));
+    if (n != sizeof(one))
+    {
+        LOG_ERROR("read the _wakeupFd_ error");
+    }
+}
+
+void Eventloop::wakeup()
+{
+    uint64_t one = 1;
+    ssize_t n = write(_wakeupFd_, &one, sizeof(one));
+    if (n != sizeof(one))
+    {
+        LOG_ERROR("read the _wakeupFd_ error");
+    }
+}
+
+void Eventloop::updateChannel(Channel *channel)
+{
+    _poller_->updateChannel(channel);
+}
+
+void Eventloop::removeChannel(Channel *channel)
+{
+    _poller_->removeChannel(channel);
+}
+
+bool Eventloop::hasChannel(Channel *channel)
+{
+    return _poller_->hasPoller(channel);
+}
+
+void Eventloop::doPendingFunctor() // 执行回调
+{
+    std::vector<Functor> functors;
+    _callingPendingFunctors_ = true;
+
+    {
+        std::unique_lock<std::mutex> lock(_mutex_);
+        _pendingFunctors_.swap(functors);
+    }
+
+    for (const Functor &cb : functors)
+    {
+        cb();
+    }
+    _callingPendingFunctors_ = false;
 }

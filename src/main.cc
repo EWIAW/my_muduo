@@ -7,9 +7,9 @@
 // 测试Logger模块
 void test1()
 {
-    ILOG("测试%d", 2);
-    DLOG("测试%d", 2);
-    ELOG("测试%d", 2);
+    LOG_INFO("测试%d", 2);
+    LOG_DEBUG("测试%d", 2);
+    LOG_ERROR("测试%d", 2);
 }
 
 // 测试Timestamp模块

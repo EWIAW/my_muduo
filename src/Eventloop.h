@@ -41,7 +41,7 @@ public:
     // Channel需要update，需要去调用poller的方法，但是这两个是两个独立的类，之间不能直接访问访问对方的成员函数，所有需要借助eventloop来访问
     void updateChannel(Channel *channel);
     void removeChannel(Channel *channel);
-    void hasChannel(Channel *channel);
+    bool hasChannel(Channel *channel);
 
     // 判断当前EventLoop是否在自己的线程中
     bool isInLoopThread() { return _threadId_ == CurrentThread::tid(); }

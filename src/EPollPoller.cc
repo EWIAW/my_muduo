@@ -17,8 +17,7 @@ EPollPoller::EPollPoller(Eventloop *loop)
 {
     if (_epollfd_ < 0)
     {
-        ELOG("epoll_create failed");
-        exit(-1);
+        LOG_FATAL("epoll_create failed");
     }
 }
 
@@ -36,7 +35,7 @@ Timestamp EPollPoller::poll(int timeoutMs, ChannelLists *activeChannel)
     Timestamp now = Timestamp::Now();
     if (numEvents > 0)
     {
-        ILOG("epoll_wait success , event nums : %d", numEvents);
+        LOG_INFO("epoll_wait success , event nums : %d", numEvents);
         fillActiveChannel(numEvents, activeChannel);
         // 给_events_扩容，说明此时就绪的事件>=容量，需要扩容
         if (numEvents == _events_.size())
@@ -46,15 +45,14 @@ Timestamp EPollPoller::poll(int timeoutMs, ChannelLists *activeChannel)
     }
     else if (numEvents == 0)
     {
-        ILOG("time out!!!");
+        LOG_INFO("time out!!!");
     }
     else
     {
         if (saveErrno != EINTR)
         {
             errno = saveErrno;
-            ILOG("epoll_wait failed");
-            exit(-1);
+            LOG_FATAL("epoll_wait failed");
         }
     }
     return now;
@@ -130,11 +128,11 @@ void EPollPoller::update(int operation, Channel *channel)
     {
         if (operation == EPOLL_CTL_DEL)
         {
-            ELOG("epoll delete failed!!!");
+            LOG_ERROR("epoll delete failed!!!");
         }
         else
         {
-            ELOG("epoll add/mod failed!!!");
+            LOG_ERROR("epoll add/mod failed!!!");
         }
     }
 }

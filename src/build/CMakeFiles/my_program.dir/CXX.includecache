@@ -6,9 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/zrb/my_muduo/my_muduo/src/CurrentThread.cc
-CurrentThread.h
-/home/zrb/my_muduo/my_muduo/src/CurrentThread.h
+/home/zrb/my_muduo/my_muduo/src/Channel.h
+functional
+-
+memory
+-
+noncopyable.h
+/home/zrb/my_muduo/my_muduo/src/noncopyable.h
+Timestamp.h
+/home/zrb/my_muduo/my_muduo/src/Timestamp.h
 
 /home/zrb/my_muduo/my_muduo/src/CurrentThread.h
 unistd.h
@@ -19,6 +25,8 @@ sys/syscall.h
 /home/zrb/my_muduo/my_muduo/src/Eventloop.cc
 Eventloop.h
 /home/zrb/my_muduo/my_muduo/src/Eventloop.h
+Channel.h
+/home/zrb/my_muduo/my_muduo/src/Channel.h
 
 /home/zrb/my_muduo/my_muduo/src/Eventloop.h
 unistd.h
@@ -39,6 +47,8 @@ Poller.h
 /home/zrb/my_muduo/my_muduo/src/Poller.h
 CurrentThread.h
 /home/zrb/my_muduo/my_muduo/src/CurrentThread.h
+noncopyable.h
+/home/zrb/my_muduo/my_muduo/src/noncopyable.h
 
 /home/zrb/my_muduo/my_muduo/src/Poller.h
 vector

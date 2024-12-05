@@ -1,6 +1,7 @@
 #include <sys/epoll.h>
 
 #include "Channel.h"
+#include "Eventloop.h"
 
 // 保存事件可读可写的状态
 const int Channel::kNoneEvent = 0;
@@ -29,12 +30,12 @@ void Channel::tie(const std::shared_ptr<void> &obj)
 
 void Channel::update()
 {
-    // todo
+    _loop_->updateChannel(this);
 }
 
 void Channel::remove()
 {
-    // todo
+    _loop_->removeChannel(this);
 }
 
 void Channel::HandlerEvent(Timestamp receiveTime)

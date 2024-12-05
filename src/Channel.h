@@ -55,6 +55,11 @@ public:
         _events_ &= ~kWriteEvent;
         update();
     }
+    void DisableAll()
+    {
+        _events_ = kNoneEvent;
+        update();
+    }
 
     // 返回fd当前事件状态
     bool IsNoneEvent() const { return _events_ == kNoneEvent; }

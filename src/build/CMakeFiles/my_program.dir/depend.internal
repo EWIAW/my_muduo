@@ -24,6 +24,7 @@ CMakeFiles/my_program.dir/EPollPoller.cc.o
  /home/zrb/my_muduo/my_muduo/src/Timestamp.h
  /home/zrb/my_muduo/my_muduo/src/noncopyable.h
 CMakeFiles/my_program.dir/Eventloop.cc.o
+ /home/zrb/my_muduo/my_muduo/src/Channel.h
  /home/zrb/my_muduo/my_muduo/src/CurrentThread.h
  /home/zrb/my_muduo/my_muduo/src/Eventloop.cc
  /home/zrb/my_muduo/my_muduo/src/Eventloop.h
