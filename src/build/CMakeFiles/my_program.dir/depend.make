@@ -3,6 +3,9 @@
 
 CMakeFiles/my_program.dir/Channel.cc.o: ../Channel.cc
 CMakeFiles/my_program.dir/Channel.cc.o: ../Channel.h
+CMakeFiles/my_program.dir/Channel.cc.o: ../CurrentThread.h
+CMakeFiles/my_program.dir/Channel.cc.o: ../Eventloop.h
+CMakeFiles/my_program.dir/Channel.cc.o: ../Poller.h
 CMakeFiles/my_program.dir/Channel.cc.o: ../Timestamp.h
 CMakeFiles/my_program.dir/Channel.cc.o: ../noncopyable.h
 
@@ -27,6 +30,7 @@ CMakeFiles/my_program.dir/Eventloop.cc.o: ../Channel.h
 CMakeFiles/my_program.dir/Eventloop.cc.o: ../CurrentThread.h
 CMakeFiles/my_program.dir/Eventloop.cc.o: ../Eventloop.cc
 CMakeFiles/my_program.dir/Eventloop.cc.o: ../Eventloop.h
+CMakeFiles/my_program.dir/Eventloop.cc.o: ../Logger.h
 CMakeFiles/my_program.dir/Eventloop.cc.o: ../Poller.h
 CMakeFiles/my_program.dir/Eventloop.cc.o: ../Timestamp.h
 CMakeFiles/my_program.dir/Eventloop.cc.o: ../noncopyable.h
@@ -42,6 +46,10 @@ CMakeFiles/my_program.dir/Poller.cc.o: ../noncopyable.h
 
 CMakeFiles/my_program.dir/Tcpserver.cc.o: ../Tcpserver.cc
 CMakeFiles/my_program.dir/Tcpserver.cc.o: ../Tcpserver.h
+
+CMakeFiles/my_program.dir/Thread.cc.o: ../CurrentThread.h
+CMakeFiles/my_program.dir/Thread.cc.o: ../Thread.cc
+CMakeFiles/my_program.dir/Thread.cc.o: ../Thread.h
 
 CMakeFiles/my_program.dir/Timestamp.cc.o: ../Timestamp.cc
 CMakeFiles/my_program.dir/Timestamp.cc.o: ../Timestamp.h

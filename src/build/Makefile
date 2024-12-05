@@ -306,6 +306,30 @@ Tcpserver.cc.s:
 	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Tcpserver.cc.s
 .PHONY : Tcpserver.cc.s
 
+Thread.o: Thread.cc.o
+.PHONY : Thread.o
+
+# target to build an object file
+Thread.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Thread.cc.o
+.PHONY : Thread.cc.o
+
+Thread.i: Thread.cc.i
+.PHONY : Thread.i
+
+# target to preprocess a source file
+Thread.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Thread.cc.i
+.PHONY : Thread.cc.i
+
+Thread.s: Thread.cc.s
+.PHONY : Thread.s
+
+# target to generate assembly for a file
+Thread.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Thread.cc.s
+.PHONY : Thread.cc.s
+
 Timestamp.o: Timestamp.cc.o
 .PHONY : Timestamp.o
 
@@ -387,6 +411,9 @@ help:
 	@echo "... Tcpserver.o"
 	@echo "... Tcpserver.i"
 	@echo "... Tcpserver.s"
+	@echo "... Thread.o"
+	@echo "... Thread.i"
+	@echo "... Thread.s"
 	@echo "... Timestamp.o"
 	@echo "... Timestamp.i"
 	@echo "... Timestamp.s"

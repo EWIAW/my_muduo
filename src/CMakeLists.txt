@@ -1,14 +1,3 @@
-# cmake_minimum_required(VERSION 2.8)
-# project(my_muduo)
-
-# set(LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
-
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++11")
-
-# aux_source_directory(. SRC_LIST)
-
-# add_library(my_muduo SHARED ${SRC_LIST})
-
 # 设置 CMake 的最低版本要求
 cmake_minimum_required(VERSION 2.8)
 
@@ -21,19 +10,13 @@ set(CMAKE_CXX_STANDARD 11)
 # 包含头文件目录（如果需要）
 include_directories(${PROJECT_SOURCE_DIR})
 
-# 定义源文件
-set(SOURCES
-    Channel.cc
-    CurrentThread.cc
-    DefaultPoller.cc
-    EPollPoller.cc
-    Eventloop.cc
-    InetAddress.cc
-    main.cc
-    Poller.cc
-    Tcpserver.cc
-    Timestamp.cc
+# 自动获取当前目录及子目录下所有的 .cc 文件
+file(GLOB SOURCES
+    ${PROJECT_SOURCE_DIR}/*.cc  # 获取当前目录下的所有 .cc 文件
+    ${PROJECT_SOURCE_DIR}/**/*.cc  # 获取所有子目录下的 .cc 文件
 )
 
 # 添加可执行文件
 add_executable(my_program ${SOURCES})
+
+target_link_libraries(my_program pthread rt)
