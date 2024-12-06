@@ -1,7 +1,7 @@
 #include "Poller.h"
 #include "Channel.h"
 
-Poller::Poller(Eventloop *ownerloop)
+Poller::Poller(EventLoop *ownerloop)
     : _ownerloop_(ownerloop)
 {
 }

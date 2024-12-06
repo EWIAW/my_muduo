@@ -52,32 +52,9 @@ include CMakeFiles/my_program.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/my_program.dir/flags.make
 
-CMakeFiles/my_program.dir/Eventloop.cc.o: CMakeFiles/my_program.dir/flags.make
-CMakeFiles/my_program.dir/Eventloop.cc.o: ../Eventloop.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/zrb/my_muduo/my_muduo/src/build/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/my_program.dir/Eventloop.cc.o"
-	/opt/rh/devtoolset-7/root/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/my_program.dir/Eventloop.cc.o -c /home/zrb/my_muduo/my_muduo/src/Eventloop.cc
-
-CMakeFiles/my_program.dir/Eventloop.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/my_program.dir/Eventloop.cc.i"
-	/opt/rh/devtoolset-7/root/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/zrb/my_muduo/my_muduo/src/Eventloop.cc > CMakeFiles/my_program.dir/Eventloop.cc.i
-
-CMakeFiles/my_program.dir/Eventloop.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/my_program.dir/Eventloop.cc.s"
-	/opt/rh/devtoolset-7/root/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/zrb/my_muduo/my_muduo/src/Eventloop.cc -o CMakeFiles/my_program.dir/Eventloop.cc.s
-
-CMakeFiles/my_program.dir/Eventloop.cc.o.requires:
-.PHONY : CMakeFiles/my_program.dir/Eventloop.cc.o.requires
-
-CMakeFiles/my_program.dir/Eventloop.cc.o.provides: CMakeFiles/my_program.dir/Eventloop.cc.o.requires
-	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Eventloop.cc.o.provides.build
-.PHONY : CMakeFiles/my_program.dir/Eventloop.cc.o.provides
-
-CMakeFiles/my_program.dir/Eventloop.cc.o.provides.build: CMakeFiles/my_program.dir/Eventloop.cc.o
-
 CMakeFiles/my_program.dir/Poller.cc.o: CMakeFiles/my_program.dir/flags.make
 CMakeFiles/my_program.dir/Poller.cc.o: ../Poller.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/zrb/my_muduo/my_muduo/src/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/zrb/my_muduo/my_muduo/src/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/my_program.dir/Poller.cc.o"
 	/opt/rh/devtoolset-7/root/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/my_program.dir/Poller.cc.o -c /home/zrb/my_muduo/my_muduo/src/Poller.cc
 
@@ -97,6 +74,29 @@ CMakeFiles/my_program.dir/Poller.cc.o.provides: CMakeFiles/my_program.dir/Poller
 .PHONY : CMakeFiles/my_program.dir/Poller.cc.o.provides
 
 CMakeFiles/my_program.dir/Poller.cc.o.provides.build: CMakeFiles/my_program.dir/Poller.cc.o
+
+CMakeFiles/my_program.dir/EventLoop.cc.o: CMakeFiles/my_program.dir/flags.make
+CMakeFiles/my_program.dir/EventLoop.cc.o: ../EventLoop.cc
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/zrb/my_muduo/my_muduo/src/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/my_program.dir/EventLoop.cc.o"
+	/opt/rh/devtoolset-7/root/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/my_program.dir/EventLoop.cc.o -c /home/zrb/my_muduo/my_muduo/src/EventLoop.cc
+
+CMakeFiles/my_program.dir/EventLoop.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/my_program.dir/EventLoop.cc.i"
+	/opt/rh/devtoolset-7/root/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/zrb/my_muduo/my_muduo/src/EventLoop.cc > CMakeFiles/my_program.dir/EventLoop.cc.i
+
+CMakeFiles/my_program.dir/EventLoop.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/my_program.dir/EventLoop.cc.s"
+	/opt/rh/devtoolset-7/root/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/zrb/my_muduo/my_muduo/src/EventLoop.cc -o CMakeFiles/my_program.dir/EventLoop.cc.s
+
+CMakeFiles/my_program.dir/EventLoop.cc.o.requires:
+.PHONY : CMakeFiles/my_program.dir/EventLoop.cc.o.requires
+
+CMakeFiles/my_program.dir/EventLoop.cc.o.provides: CMakeFiles/my_program.dir/EventLoop.cc.o.requires
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/EventLoop.cc.o.provides.build
+.PHONY : CMakeFiles/my_program.dir/EventLoop.cc.o.provides
+
+CMakeFiles/my_program.dir/EventLoop.cc.o.provides.build: CMakeFiles/my_program.dir/EventLoop.cc.o
 
 CMakeFiles/my_program.dir/main.cc.o: CMakeFiles/my_program.dir/flags.make
 CMakeFiles/my_program.dir/main.cc.o: ../main.cc
@@ -236,9 +236,32 @@ CMakeFiles/my_program.dir/Thread.cc.o.provides: CMakeFiles/my_program.dir/Thread
 
 CMakeFiles/my_program.dir/Thread.cc.o.provides.build: CMakeFiles/my_program.dir/Thread.cc.o
 
+CMakeFiles/my_program.dir/EventLoopThread.cc.o: CMakeFiles/my_program.dir/flags.make
+CMakeFiles/my_program.dir/EventLoopThread.cc.o: ../EventLoopThread.cc
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/zrb/my_muduo/my_muduo/src/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/my_program.dir/EventLoopThread.cc.o"
+	/opt/rh/devtoolset-7/root/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/my_program.dir/EventLoopThread.cc.o -c /home/zrb/my_muduo/my_muduo/src/EventLoopThread.cc
+
+CMakeFiles/my_program.dir/EventLoopThread.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/my_program.dir/EventLoopThread.cc.i"
+	/opt/rh/devtoolset-7/root/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/zrb/my_muduo/my_muduo/src/EventLoopThread.cc > CMakeFiles/my_program.dir/EventLoopThread.cc.i
+
+CMakeFiles/my_program.dir/EventLoopThread.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/my_program.dir/EventLoopThread.cc.s"
+	/opt/rh/devtoolset-7/root/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/zrb/my_muduo/my_muduo/src/EventLoopThread.cc -o CMakeFiles/my_program.dir/EventLoopThread.cc.s
+
+CMakeFiles/my_program.dir/EventLoopThread.cc.o.requires:
+.PHONY : CMakeFiles/my_program.dir/EventLoopThread.cc.o.requires
+
+CMakeFiles/my_program.dir/EventLoopThread.cc.o.provides: CMakeFiles/my_program.dir/EventLoopThread.cc.o.requires
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/EventLoopThread.cc.o.provides.build
+.PHONY : CMakeFiles/my_program.dir/EventLoopThread.cc.o.provides
+
+CMakeFiles/my_program.dir/EventLoopThread.cc.o.provides.build: CMakeFiles/my_program.dir/EventLoopThread.cc.o
+
 CMakeFiles/my_program.dir/DefaultPoller.cc.o: CMakeFiles/my_program.dir/flags.make
 CMakeFiles/my_program.dir/DefaultPoller.cc.o: ../DefaultPoller.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/zrb/my_muduo/my_muduo/src/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/zrb/my_muduo/my_muduo/src/build/CMakeFiles $(CMAKE_PROGRESS_10)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/my_program.dir/DefaultPoller.cc.o"
 	/opt/rh/devtoolset-7/root/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/my_program.dir/DefaultPoller.cc.o -c /home/zrb/my_muduo/my_muduo/src/DefaultPoller.cc
 
@@ -261,7 +284,7 @@ CMakeFiles/my_program.dir/DefaultPoller.cc.o.provides.build: CMakeFiles/my_progr
 
 CMakeFiles/my_program.dir/InetAddress.cc.o: CMakeFiles/my_program.dir/flags.make
 CMakeFiles/my_program.dir/InetAddress.cc.o: ../InetAddress.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/zrb/my_muduo/my_muduo/src/build/CMakeFiles $(CMAKE_PROGRESS_10)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/zrb/my_muduo/my_muduo/src/build/CMakeFiles $(CMAKE_PROGRESS_11)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/my_program.dir/InetAddress.cc.o"
 	/opt/rh/devtoolset-7/root/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/my_program.dir/InetAddress.cc.o -c /home/zrb/my_muduo/my_muduo/src/InetAddress.cc
 
@@ -284,7 +307,7 @@ CMakeFiles/my_program.dir/InetAddress.cc.o.provides.build: CMakeFiles/my_program
 
 CMakeFiles/my_program.dir/Timestamp.cc.o: CMakeFiles/my_program.dir/flags.make
 CMakeFiles/my_program.dir/Timestamp.cc.o: ../Timestamp.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/zrb/my_muduo/my_muduo/src/build/CMakeFiles $(CMAKE_PROGRESS_11)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/zrb/my_muduo/my_muduo/src/build/CMakeFiles $(CMAKE_PROGRESS_12)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/my_program.dir/Timestamp.cc.o"
 	/opt/rh/devtoolset-7/root/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/my_program.dir/Timestamp.cc.o -c /home/zrb/my_muduo/my_muduo/src/Timestamp.cc
 
@@ -307,14 +330,15 @@ CMakeFiles/my_program.dir/Timestamp.cc.o.provides.build: CMakeFiles/my_program.d
 
 # Object files for target my_program
 my_program_OBJECTS = \
-"CMakeFiles/my_program.dir/Eventloop.cc.o" \
 "CMakeFiles/my_program.dir/Poller.cc.o" \
+"CMakeFiles/my_program.dir/EventLoop.cc.o" \
 "CMakeFiles/my_program.dir/main.cc.o" \
 "CMakeFiles/my_program.dir/Channel.cc.o" \
 "CMakeFiles/my_program.dir/Tcpserver.cc.o" \
 "CMakeFiles/my_program.dir/EPollPoller.cc.o" \
 "CMakeFiles/my_program.dir/CurrentThread.cc.o" \
 "CMakeFiles/my_program.dir/Thread.cc.o" \
+"CMakeFiles/my_program.dir/EventLoopThread.cc.o" \
 "CMakeFiles/my_program.dir/DefaultPoller.cc.o" \
 "CMakeFiles/my_program.dir/InetAddress.cc.o" \
 "CMakeFiles/my_program.dir/Timestamp.cc.o"
@@ -322,14 +346,15 @@ my_program_OBJECTS = \
 # External object files for target my_program
 my_program_EXTERNAL_OBJECTS =
 
-my_program: CMakeFiles/my_program.dir/Eventloop.cc.o
 my_program: CMakeFiles/my_program.dir/Poller.cc.o
+my_program: CMakeFiles/my_program.dir/EventLoop.cc.o
 my_program: CMakeFiles/my_program.dir/main.cc.o
 my_program: CMakeFiles/my_program.dir/Channel.cc.o
 my_program: CMakeFiles/my_program.dir/Tcpserver.cc.o
 my_program: CMakeFiles/my_program.dir/EPollPoller.cc.o
 my_program: CMakeFiles/my_program.dir/CurrentThread.cc.o
 my_program: CMakeFiles/my_program.dir/Thread.cc.o
+my_program: CMakeFiles/my_program.dir/EventLoopThread.cc.o
 my_program: CMakeFiles/my_program.dir/DefaultPoller.cc.o
 my_program: CMakeFiles/my_program.dir/InetAddress.cc.o
 my_program: CMakeFiles/my_program.dir/Timestamp.cc.o
@@ -342,14 +367,15 @@ my_program: CMakeFiles/my_program.dir/link.txt
 CMakeFiles/my_program.dir/build: my_program
 .PHONY : CMakeFiles/my_program.dir/build
 
-CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/Eventloop.cc.o.requires
 CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/Poller.cc.o.requires
+CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/EventLoop.cc.o.requires
 CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/main.cc.o.requires
 CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/Channel.cc.o.requires
 CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/Tcpserver.cc.o.requires
 CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/EPollPoller.cc.o.requires
 CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/CurrentThread.cc.o.requires
 CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/Thread.cc.o.requires
+CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/EventLoopThread.cc.o.requires
 CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/DefaultPoller.cc.o.requires
 CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/InetAddress.cc.o.requires
 CMakeFiles/my_program.dir/requires: CMakeFiles/my_program.dir/Timestamp.cc.o.requires

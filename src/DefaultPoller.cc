@@ -3,7 +3,7 @@
 #include "EPollPoller.h"
 
 // 实现获取默认的poller
-Poller *Poller::newDefaultPoller(Eventloop *loop)
+Poller *Poller::newDefaultPoller(EventLoop *loop)
 {
     if (getenv("MUDUO_USE_POLL"))
     {

@@ -6,7 +6,7 @@
 #include "noncopyable.h"
 #include "Timestamp.h"
 
-class Eventloop;
+class EventLoop;
 
 // Channel为通过，用于封装sockfd和epoll需要监听的事件，还绑定了poller返回的具体事件
 class Channel
@@ -15,7 +15,7 @@ public:
     using EventCallback = std::function<void()>;
     using ReadEventCallback = std::function<void(Timestamp)>;
 
-    Channel(Eventloop *loop, int fd);
+    Channel(EventLoop *loop, int fd);
     ~Channel();
 
     // fd得到poller通知后，处理事件
@@ -69,7 +69,7 @@ public:
     int index() { return _index_; }
     void Set_Index(int index) { _index_ = index; }
 
-    Eventloop *ownerloop() { return _loop_; }
+    EventLoop *ownerloop() { return _loop_; }
     void remove();
 
 private:
@@ -81,7 +81,7 @@ private:
     static const int kReadEvent;
     static const int kWriteEvent;
 
-    Eventloop *_loop_;
+    EventLoop *_loop_;
     const int _fd_;
     int _events_;  // 注册fd所监听的事件
     int _revents_; // 返回fd就绪的事件

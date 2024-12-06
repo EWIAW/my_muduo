@@ -16,13 +16,13 @@
 class Channel;
 class Poller;
 
-class Eventloop : noncopyable
+class EventLoop : noncopyable
 {
     using Functor = std::function<void()>;
 
 public:
-    Eventloop();
-    ~Eventloop();
+    EventLoop();
+    ~EventLoop();
 
     void loop(); // 开启事件循环
     void quit(); // 退出事件循环

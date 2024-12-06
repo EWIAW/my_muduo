@@ -1,14 +1,14 @@
 #include <sys/epoll.h>
 
 #include "Channel.h"
-#include "Eventloop.h"
+#include "EventLoop.h"
 
 // 保存事件可读可写的状态
 const int Channel::kNoneEvent = 0;
 const int Channel::kReadEvent = EPOLLIN | EPOLLPRI;
 const int Channel::kWriteEvent = EPOLLOUT;
 
-Channel::Channel(Eventloop *loop, int fd)
+Channel::Channel(EventLoop *loop, int fd)
     : _loop_(loop),
       _fd_(fd),
       _events_(0),

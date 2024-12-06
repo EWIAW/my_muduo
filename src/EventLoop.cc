@@ -2,12 +2,12 @@
 
 #include <string.h>
 
-#include "Eventloop.h"
+#include "EventLoop.h"
 #include "Channel.h"
 #include "Logger.h"
 
 // 防止一个线程创建多个eventloop thread_local
-__thread Eventloop *t_loopInThisThread = nullptr;
+__thread EventLoop *t_loopInThisThread = nullptr;
 
 // 定义epoll_wait所设置的超时时间
 const int kPollTimeMs = 10000;
@@ -23,7 +23,7 @@ int createEventFd()
     return evtfd;
 }
 
-Eventloop::Eventloop()
+EventLoop::EventLoop()
     : _looping_(false),
       _quit_(false),
       _threadId_(CurrentThread::tid()),
@@ -41,11 +41,11 @@ Eventloop::Eventloop()
     {
         t_loopInThisThread = this;
     }
-    _wakeupChannel_->SetReadCallback(std::bind(&Eventloop::handlerRead, this));
+    _wakeupChannel_->SetReadCallback(std::bind(&EventLoop::handlerRead, this));
     _wakeupChannel_->EnableReading();
 }
 
-Eventloop::~Eventloop()
+EventLoop::~EventLoop()
 {
     _wakeupChannel_->DisableAll();
     _wakeupChannel_->remove();
@@ -53,7 +53,7 @@ Eventloop::~Eventloop()
     t_loopInThisThread = nullptr;
 }
 
-void Eventloop::loop() // 开启事件循环
+void EventLoop::loop() // 开启事件循环
 {
     _looping_ = true;
     _quit_ = false;
@@ -70,7 +70,7 @@ void Eventloop::loop() // 开启事件循环
     _looping_ = true;
 }
 
-void Eventloop::quit() // 退出事件循环
+void EventLoop::quit() // 退出事件循环
 {
     _quit_ = false;
     if (!isInLoopThread())
@@ -80,7 +80,7 @@ void Eventloop::quit() // 退出事件循环
 }
 
 // 在当前loop中执行回调
-void Eventloop::runInLoop(Functor cb)
+void EventLoop::runInLoop(Functor cb)
 {
     if (isInLoopThread())
     {
@@ -93,7 +93,7 @@ void Eventloop::runInLoop(Functor cb)
 }
 
 // 把cb放入队列中，唤醒loop所在线程，执行cb
-void Eventloop::queueInLoop(Functor cb)
+void EventLoop::queueInLoop(Functor cb)
 {
     {
         std::unique_lock<std::mutex> lock(_mutex_);
@@ -106,7 +106,7 @@ void Eventloop::queueInLoop(Functor cb)
     }
 }
 
-void Eventloop::handlerRead() // wake up
+void EventLoop::handlerRead() // wake up
 {
     uint64_t one = 1;
     ssize_t n = read(_wakeupFd_, &one, sizeof(one));
@@ -116,7 +116,7 @@ void Eventloop::handlerRead() // wake up
     }
 }
 
-void Eventloop::wakeup()
+void EventLoop::wakeup()
 {
     uint64_t one = 1;
     ssize_t n = write(_wakeupFd_, &one, sizeof(one));
@@ -126,22 +126,22 @@ void Eventloop::wakeup()
     }
 }
 
-void Eventloop::updateChannel(Channel *channel)
+void EventLoop::updateChannel(Channel *channel)
 {
     _poller_->updateChannel(channel);
 }
 
-void Eventloop::removeChannel(Channel *channel)
+void EventLoop::removeChannel(Channel *channel)
 {
     _poller_->removeChannel(channel);
 }
 
-bool Eventloop::hasChannel(Channel *channel)
+bool EventLoop::hasChannel(Channel *channel)
 {
     return _poller_->hasPoller(channel);
 }
 
-void Eventloop::doPendingFunctor() // 执行回调
+void EventLoop::doPendingFunctor() // 执行回调
 {
     std::vector<Functor> functors;
     _callingPendingFunctors_ = true;

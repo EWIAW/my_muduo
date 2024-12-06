@@ -7,14 +7,14 @@
 #include "Poller.h"
 #include "Timestamp.h"
 
-class Eventloop;
+class EventLoop;
 
 // 这个类主要是封装epoll的操作
 // 如epoll_create,epoll_ctl,epoll_wait;
 class EPollPoller : public Poller
 {
 public:
-    EPollPoller(Eventloop *loop);
+    EPollPoller(EventLoop *loop);
     ~EPollPoller() override;
 
     // 重写基类Poller抽象方法
