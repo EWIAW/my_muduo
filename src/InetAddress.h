@@ -16,6 +16,9 @@ public:
     uint16_t GetPort();
     std::string GetIpPort();
 
+    const sockaddr_in *getSockAddr() const { return &addr_; }
+    void setSockAddr(const struct sockaddr_in &addr) { addr_ = addr; }
+
 private:
     struct sockaddr_in addr_;
 };

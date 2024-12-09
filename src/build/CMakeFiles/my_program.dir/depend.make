@@ -44,6 +44,12 @@ CMakeFiles/my_program.dir/EventLoopThread.cc.o: ../Thread.h
 CMakeFiles/my_program.dir/EventLoopThread.cc.o: ../Timestamp.h
 CMakeFiles/my_program.dir/EventLoopThread.cc.o: ../noncopyable.h
 
+CMakeFiles/my_program.dir/EventLoopThreadPool.cc.o: ../EventLoopThread.h
+CMakeFiles/my_program.dir/EventLoopThreadPool.cc.o: ../EventLoopThreadPool.cc
+CMakeFiles/my_program.dir/EventLoopThreadPool.cc.o: ../EventLoopThreadPool.h
+CMakeFiles/my_program.dir/EventLoopThreadPool.cc.o: ../Thread.h
+CMakeFiles/my_program.dir/EventLoopThreadPool.cc.o: ../noncopyable.h
+
 CMakeFiles/my_program.dir/InetAddress.cc.o: ../InetAddress.cc
 CMakeFiles/my_program.dir/InetAddress.cc.o: ../InetAddress.h
 
@@ -52,6 +58,11 @@ CMakeFiles/my_program.dir/Poller.cc.o: ../Poller.cc
 CMakeFiles/my_program.dir/Poller.cc.o: ../Poller.h
 CMakeFiles/my_program.dir/Poller.cc.o: ../Timestamp.h
 CMakeFiles/my_program.dir/Poller.cc.o: ../noncopyable.h
+
+CMakeFiles/my_program.dir/Socket.cc.o: ../InetAddress.h
+CMakeFiles/my_program.dir/Socket.cc.o: ../Logger.h
+CMakeFiles/my_program.dir/Socket.cc.o: ../Socket.cc
+CMakeFiles/my_program.dir/Socket.cc.o: ../Socket.h
 
 CMakeFiles/my_program.dir/Tcpserver.cc.o: ../Tcpserver.cc
 CMakeFiles/my_program.dir/Tcpserver.cc.o: ../Tcpserver.h

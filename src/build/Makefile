@@ -258,6 +258,30 @@ EventLoopThread.cc.s:
 	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/EventLoopThread.cc.s
 .PHONY : EventLoopThread.cc.s
 
+EventLoopThreadPool.o: EventLoopThreadPool.cc.o
+.PHONY : EventLoopThreadPool.o
+
+# target to build an object file
+EventLoopThreadPool.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/EventLoopThreadPool.cc.o
+.PHONY : EventLoopThreadPool.cc.o
+
+EventLoopThreadPool.i: EventLoopThreadPool.cc.i
+.PHONY : EventLoopThreadPool.i
+
+# target to preprocess a source file
+EventLoopThreadPool.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/EventLoopThreadPool.cc.i
+.PHONY : EventLoopThreadPool.cc.i
+
+EventLoopThreadPool.s: EventLoopThreadPool.cc.s
+.PHONY : EventLoopThreadPool.s
+
+# target to generate assembly for a file
+EventLoopThreadPool.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/EventLoopThreadPool.cc.s
+.PHONY : EventLoopThreadPool.cc.s
+
 InetAddress.o: InetAddress.cc.o
 .PHONY : InetAddress.o
 
@@ -305,6 +329,30 @@ Poller.s: Poller.cc.s
 Poller.cc.s:
 	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Poller.cc.s
 .PHONY : Poller.cc.s
+
+Socket.o: Socket.cc.o
+.PHONY : Socket.o
+
+# target to build an object file
+Socket.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Socket.cc.o
+.PHONY : Socket.cc.o
+
+Socket.i: Socket.cc.i
+.PHONY : Socket.i
+
+# target to preprocess a source file
+Socket.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Socket.cc.i
+.PHONY : Socket.cc.i
+
+Socket.s: Socket.cc.s
+.PHONY : Socket.s
+
+# target to generate assembly for a file
+Socket.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Socket.cc.s
+.PHONY : Socket.cc.s
 
 Tcpserver.o: Tcpserver.cc.o
 .PHONY : Tcpserver.o
@@ -429,12 +477,18 @@ help:
 	@echo "... EventLoopThread.o"
 	@echo "... EventLoopThread.i"
 	@echo "... EventLoopThread.s"
+	@echo "... EventLoopThreadPool.o"
+	@echo "... EventLoopThreadPool.i"
+	@echo "... EventLoopThreadPool.s"
 	@echo "... InetAddress.o"
 	@echo "... InetAddress.i"
 	@echo "... InetAddress.s"
 	@echo "... Poller.o"
 	@echo "... Poller.i"
 	@echo "... Poller.s"
+	@echo "... Socket.o"
+	@echo "... Socket.i"
+	@echo "... Socket.s"
 	@echo "... Tcpserver.o"
 	@echo "... Tcpserver.i"
 	@echo "... Tcpserver.s"
