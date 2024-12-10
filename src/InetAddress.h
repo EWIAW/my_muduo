@@ -9,7 +9,7 @@
 class InetAddress
 {
 public:
-    explicit InetAddress(const uint16_t port, const std::string ip = "127.0.0.1");
+    explicit InetAddress(const std::string ip = "127.0.0.1", const uint16_t port = 0);
     explicit InetAddress(const struct sockaddr_in &addr);
 
     std::string GetIp();

@@ -11,10 +11,10 @@ class EventLoop;
 // Channel为通过，用于封装sockfd和epoll需要监听的事件，还绑定了poller返回的具体事件
 class Channel
 {
-public:
     using EventCallback = std::function<void()>;
     using ReadEventCallback = std::function<void(Timestamp)>;
 
+public:
     Channel(EventLoop *loop, int fd);
     ~Channel();
 
@@ -76,7 +76,8 @@ private:
     void update();
     void HandlerEventWithGuard(Timestamp receiveTime);
 
-    // 保存事件可读可写的状态
+private:
+    // 保存事件可读还是可写的状态
     static const int kNoneEvent;
     static const int kReadEvent;
     static const int kWriteEvent;
@@ -85,7 +86,7 @@ private:
     const int _fd_;
     int _events_;  // 注册fd所监听的事件
     int _revents_; // 返回fd就绪的事件
-    int _index_;
+    int _index_;   // 用于帮助poller高效管理channel，例如index为-1，代表channel未加入到epoll模型中
 
     std::weak_ptr<void> _tie_;
     bool _tied_;

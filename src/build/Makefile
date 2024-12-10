@@ -114,6 +114,30 @@ my_program/fast:
 	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/build
 .PHONY : my_program/fast
 
+Acceptor.o: Acceptor.cc.o
+.PHONY : Acceptor.o
+
+# target to build an object file
+Acceptor.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Acceptor.cc.o
+.PHONY : Acceptor.cc.o
+
+Acceptor.i: Acceptor.cc.i
+.PHONY : Acceptor.i
+
+# target to preprocess a source file
+Acceptor.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Acceptor.cc.i
+.PHONY : Acceptor.cc.i
+
+Acceptor.s: Acceptor.cc.s
+.PHONY : Acceptor.s
+
+# target to generate assembly for a file
+Acceptor.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Acceptor.cc.s
+.PHONY : Acceptor.cc.s
+
 Channel.o: Channel.cc.o
 .PHONY : Channel.o
 
@@ -459,6 +483,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... my_program"
 	@echo "... rebuild_cache"
+	@echo "... Acceptor.o"
+	@echo "... Acceptor.i"
+	@echo "... Acceptor.s"
 	@echo "... Channel.o"
 	@echo "... Channel.i"
 	@echo "... Channel.s"

@@ -1,7 +1,7 @@
 
 #include "InetAddress.h"
 
-InetAddress::InetAddress(const uint16_t port, const std::string ip)
+InetAddress::InetAddress(const std::string ip, const uint16_t port)
 {
     bzero(&addr_, sizeof(addr_));
     addr_.sin_family = AF_INET;
@@ -17,7 +17,7 @@ InetAddress::InetAddress(const struct sockaddr_in &addr)
 std::string InetAddress::GetIp()
 {
     char buffer[32] = {0};
-    inet_ntop(AF_INET, &addr_.sin_addr, buffer, sizeof(buffer));
+    inet_ntop(AF_INET, &addr_.sin_addr, buffer, sizeof(buffer) - 1);
     return buffer;
 }
 

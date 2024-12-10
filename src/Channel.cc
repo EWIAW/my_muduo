@@ -5,7 +5,7 @@
 
 // 保存事件可读可写的状态
 const int Channel::kNoneEvent = 0;
-const int Channel::kReadEvent = EPOLLIN | EPOLLPRI;
+const int Channel::kReadEvent = EPOLLIN | EPOLLPRI;//EPOLLPRI代表有紧急数据要监听
 const int Channel::kWriteEvent = EPOLLOUT;
 
 Channel::Channel(EventLoop *loop, int fd)

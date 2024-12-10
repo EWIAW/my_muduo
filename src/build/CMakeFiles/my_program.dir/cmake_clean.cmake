@@ -2,6 +2,7 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/my_program.dir/EventLoopThreadPool.cc.o"
   "CMakeFiles/my_program.dir/Poller.cc.o"
   "CMakeFiles/my_program.dir/EventLoop.cc.o"
+  "CMakeFiles/my_program.dir/Acceptor.cc.o"
   "CMakeFiles/my_program.dir/main.cc.o"
   "CMakeFiles/my_program.dir/Channel.cc.o"
   "CMakeFiles/my_program.dir/Tcpserver.cc.o"

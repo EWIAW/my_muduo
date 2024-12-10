@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <libgen.h>
 
 // 定义日志等级
 #define INFO "INFO"   // 信息日志宏
@@ -13,20 +14,20 @@
 #define DEFAULT_LOG_LEVEL INFO
 
 // 日志宏函数
-// 需要输出            时间        文件名 第几行    日志信息
+// 需要输出            时间        文件名   第几行    日志信息
 // 例如      [2024-10-27 21:50:43 log.hpp:34][DEBUG] message
-#define LOG(LEVEL, format, ...)                                                                           \
-    do                                                                                                    \
-    {                                                                                                     \
-        if (DEFAULT_LOG_LEVEL > LEVEL)                                                                    \
-            break;                                                                                        \
-        time_t tp = time(nullptr);                                                                        \
-        struct tm *lt = localtime(&tp);                                                                   \
-        char buffer[32];                                                                                  \
-        size_t n = strftime(buffer, sizeof(buffer) - 1, "%Y-%m-%d %H:%M:%S", lt);                         \
-        fprintf(stdout, "[%s %s:%d][%s] " format "\n", buffer, __FILE__, __LINE__, LEVEL, ##__VA_ARGS__); \
-        if (LEVEL == FATAL)                                                                               \
-            exit(-1);                                                                                     \
+#define LOG(LEVEL, format, ...)                                                                                                         \
+    do                                                                                                                                  \
+    {                                                                                                                                   \
+        if (DEFAULT_LOG_LEVEL > LEVEL)                                                                                                  \
+            break;                                                                                                                      \
+        time_t tp = time(nullptr);                                                                                                      \
+        struct tm *lt = localtime(&tp);                                                                                                 \
+        char buffer[32];                                                                                                                \
+        size_t n = strftime(buffer, sizeof(buffer) - 1, "%Y-%m-%d %H:%M:%S", lt);                                                       \
+        fprintf(stdout, "[%s %s:%d][%s] " format "\n", buffer, basename(const_cast<char *>(__FILE__)), __LINE__, LEVEL, ##__VA_ARGS__); \
+        if (LEVEL == FATAL)                                                                                                             \
+            exit(-1);                                                                                                                   \
     } while (0)
 
 #define LOG_INFO(format, ...) LOG(INFO, format, ##__VA_ARGS__)
