@@ -26,6 +26,7 @@ public:
 private:
     void setDefaultName(); // 设置线程默认名字
 
+private:
     bool _start_;
     bool _join_;
 

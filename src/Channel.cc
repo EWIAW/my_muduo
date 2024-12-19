@@ -5,7 +5,7 @@
 
 // 保存事件可读可写的状态
 const int Channel::kNoneEvent = 0;
-const int Channel::kReadEvent = EPOLLIN | EPOLLPRI;//EPOLLPRI代表有紧急数据要监听
+const int Channel::kReadEvent = EPOLLIN | EPOLLPRI; // EPOLLPRI代表有紧急数据要监听
 const int Channel::kWriteEvent = EPOLLOUT;
 
 Channel::Channel(EventLoop *loop, int fd)
@@ -13,7 +13,7 @@ Channel::Channel(EventLoop *loop, int fd)
       _fd_(fd),
       _events_(0),
       _revents_(0),
-      _index_(-1),
+      _index_(-1), //-1代表该channel为添加到poller中
       _tied_(false)
 {
 }
@@ -22,7 +22,7 @@ Channel::~Channel()
 {
 }
 
-void Channel::tie(const std::shared_ptr<void> &obj)
+void Channel::tie(const std::shared_ptr<void> &obj) //???
 {
     _tie_ = obj;
     _tied_ = true;
@@ -38,7 +38,7 @@ void Channel::remove()
     _loop_->removeChannel(this);
 }
 
-void Channel::HandlerEvent(Timestamp receiveTime)
+void Channel::HandlerEvent(Timestamp receiveTime) //???
 {
     if (_tied_)
     {
@@ -56,7 +56,7 @@ void Channel::HandlerEvent(Timestamp receiveTime)
 
 void Channel::HandlerEventWithGuard(Timestamp receiveTime)
 {
-    if ((_revents_ & EPOLLHUP) && !(_revents_ & EPOLLIN))
+    if ((_revents_ & EPOLLHUP) && !(_revents_ & EPOLLIN)) // EPOLLHUP说明对端关闭连接
     {
         if (_CloseCallback_)
             _CloseCallback_();

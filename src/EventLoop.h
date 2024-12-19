@@ -27,7 +27,7 @@ public:
     void loop(); // 开启事件循环
     void quit(); // 退出事件循环
 
-    // 返回poll返回的时间戳
+    // 返回poll(epoll_wait)被调用的时间
     Timestamp pollReturnTime() { return _pollReturnTIme_; }
 
     // 在当前loop中执行回调
@@ -50,13 +50,14 @@ private:
     void handlerRead();      // wake up
     void doPendingFunctor(); // 执行回调
 
+private:
     using ChannelLists = std::vector<Channel *>;
 
     std::atomic_bool _looping_; // 标识eventloop正在循环
     std::atomic_bool _quit_;    // 标识退出loop循环
     const pid_t _threadId_;     // 标识这个loop属于那个线程
 
-    Timestamp _pollReturnTIme_; // 记录poll函数返回的时间戳
+    Timestamp _pollReturnTIme_; // 记录poll(epoll_wait)函数被调用的时间
     std::unique_ptr<Poller> _poller_;
 
     // 当mainloop获取一个新用户的channel时，通过轮询算法选择一个subloop，通过该成员变量唤醒subloop处理channel

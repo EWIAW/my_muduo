@@ -1,3 +1,6 @@
+// 为什么要将poller层抽象出来
+// 因为要给用户提供两种不同IO多路复用的方法：epoll和poll
+// 通过使用抽象类，来实现多态，实现可以使用两种不同的IO多路复用的方法
 #pragma once
 
 #include <vector>
@@ -19,14 +22,14 @@ public:
     virtual ~Poller() = default;
 
     // 给所有IO复用保留统一的接口
-    virtual Timestamp poll(int timeoutMs, ChannelLists *activeChannel) = 0;
-    virtual void updateChannel(Channel *channel) = 0;
-    virtual void removeChannel(Channel *Channel) = 0;
+    virtual Timestamp poll(int timeoutMs, ChannelLists *activeChannel) = 0; // epoll_wait
+    virtual void updateChannel(Channel *channel) = 0;                       // epoll_ctl
+    virtual void removeChannel(Channel *Channel) = 0;                       // epoll_ctl
 
     // 判断channel是否在poller中
     bool hasPoller(Channel *Channel) const;
 
-    // Eventloop可以通过该接口获取默认的IO复用的具体实现
+    // Eventloop可以通过该接口获取默认的IO复用的具体实现，即默认获取epoll方式的IO多路复用
     static Poller *newDefaultPoller(EventLoop *loop);
 
 protected:

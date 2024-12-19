@@ -21,6 +21,7 @@ public:
 private:
     void threadFunc();
 
+private:
     EventLoop *_loop_;
     bool _exiting_;
     Thread _thread_;

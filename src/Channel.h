@@ -9,7 +9,7 @@
 class EventLoop;
 
 // Channel为通过，用于封装sockfd和epoll需要监听的事件，还绑定了poller返回的具体事件
-class Channel
+class Channel : noncopyable
 {
     using EventCallback = std::function<void()>;
     using ReadEventCallback = std::function<void(Timestamp)>;
@@ -28,7 +28,7 @@ public:
     void SetErrorCallback(EventCallback cb) { _ErrorCallback_ = std::move(cb); }
 
     // 防止channel被收到remove掉，channel还在执行回调
-    void tie(const std::shared_ptr<void> &);
+    void tie(const std::shared_ptr<void> &); //???
 
     int fd() const { return _fd_; }
     int events() { return _events_; }
@@ -61,7 +61,7 @@ public:
         update();
     }
 
-    // 返回fd当前事件状态
+    // 判断fd当前所关心的事件
     bool IsNoneEvent() const { return _events_ == kNoneEvent; }
     bool IsReading() { return _events_ & kReadEvent; }
     bool IsWriting() { return _events_ & kWriteEvent; }
@@ -88,8 +88,8 @@ private:
     int _revents_; // 返回fd就绪的事件
     int _index_;   // 用于帮助poller高效管理channel，例如index为-1，代表channel未加入到epoll模型中
 
-    std::weak_ptr<void> _tie_;
-    bool _tied_;
+    std::weak_ptr<void> _tie_; //???
+    bool _tied_;               //???
 
     // 所发生事件的回调
     ReadEventCallback _ReadCallback_;

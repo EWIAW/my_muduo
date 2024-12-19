@@ -10,6 +10,11 @@ void test1()
     LOG_INFO("测试%d", 2);
     LOG_DEBUG("测试%d", 2);
     LOG_ERROR("测试%d", 2);
+    LOG_DEBUG("func = %s", __FUNCTION__);
+    LOG_FATAL("exit");
+    while (1)
+    {
+    }
 }
 
 // 测试Timestamp模块
@@ -24,7 +29,7 @@ void test2()
 // 测试InetAddress模块
 void test3()
 {
-    InetAddress ia(3489);
+    InetAddress ia("3489");
     std::cout << ia.GetIp() << std::endl;
     std::cout << ia.GetPort() << std::endl;
     std::cout << ia.GetIpPort() << std::endl;

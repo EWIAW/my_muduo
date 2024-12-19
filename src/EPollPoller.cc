@@ -1,23 +1,25 @@
 #include <unistd.h>
 
 #include <strings.h>
+#include <string.h>
 
 #include "EPollPoller.h"
 #include "Logger.h"
 #include "Channel.h"
 
+// 对应channel的index
 const int kNew = -1;    // channel未添加到poller中
 const int kAdded = 1;   // channel已添加到poller中
 const int kDeleted = 2; // channel已从poller中删除
 
 EPollPoller::EPollPoller(EventLoop *loop)
     : Poller(loop),
-      _events_(kInitEventListSize),
+      _events_(kInitEventListSize), // 构造eventlist数组
       _epollfd_(epoll_create1(EPOLL_CLOEXEC))
 {
     if (_epollfd_ < 0)
     {
-        LOG_FATAL("epoll_create failed");
+        LOG_FATAL("epoll_create failed , errno : %d , reason : %s", errno, strerror(errno));
     }
 }
 
@@ -30,8 +32,9 @@ EPollPoller::~EPollPoller()
 // 进行epoll_wait的封装
 Timestamp EPollPoller::poll(int timeoutMs, ChannelLists *activeChannel)
 {
+    LOG_DEBUG("func = %s , fd total count : %d", __FUNCTION__, _events_.size());
     int numEvents = epoll_wait(_epollfd_, &*_events_.begin(), _events_.size(), timeoutMs);
-    int saveErrno = errno;
+    int saveErrno = errno; // 提前保存errno，以防万一
     Timestamp now = Timestamp::Now();
     if (numEvents > 0)
     {
@@ -45,14 +48,14 @@ Timestamp EPollPoller::poll(int timeoutMs, ChannelLists *activeChannel)
     }
     else if (numEvents == 0)
     {
-        LOG_INFO("time out!!!");
+        LOG_INFO("func = %s , time out!!!", __FUNCTION__);
     }
     else
     {
         if (saveErrno != EINTR)
         {
             errno = saveErrno;
-            LOG_FATAL("epoll_wait failed");
+            LOG_ERROR("epoll_wait failed , errno : %d , reason : %s", errno, strerror(errno));
         }
     }
     return now;
@@ -93,6 +96,8 @@ void EPollPoller::removeChannel(Channel *channel)
     int fd = channel->fd();
     _channelmap_.erase(fd);
 
+    LOG_INFO("func = %s , fd = %d", __FUNCTION__, fd);
+
     int index = channel->index();
     if (index == kAdded)
     {
@@ -132,7 +137,7 @@ void EPollPoller::update(int operation, Channel *channel)
         }
         else
         {
-            LOG_ERROR("epoll add/mod failed!!!");
+            LOG_FATAL("epoll add/mod failed!!!");
         }
     }
 }

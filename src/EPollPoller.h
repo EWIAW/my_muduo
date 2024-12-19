@@ -13,6 +13,8 @@ class EventLoop;
 // 如epoll_create,epoll_ctl,epoll_wait;
 class EPollPoller : public Poller
 {
+    using EventList = std::vector<struct epoll_event>;
+
 public:
     EPollPoller(EventLoop *loop);
     ~EPollPoller() override;
@@ -23,14 +25,14 @@ public:
     void removeChannel(Channel *channel) override;
 
 private:
-    // 用于初始化EventList的大小
-    static const int kInitEventListSize = 16;
     // 填写活跃的连接
     void fillActiveChannel(int numEvents, ChannelLists *activeChannels) const;
     // 更新channel通道
     void update(int operation, Channel *channel);
 
-    using EventList = std::vector<struct epoll_event>;
+private:
+    // 用于初始化EventList的大小
+    static const int kInitEventListSize = 16;
     int _epollfd_;
-    EventList _events_;
+    EventList _events_; // 通过epoll_wait所得到的就绪事件都存储再这个vector中
 };

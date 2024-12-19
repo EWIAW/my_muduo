@@ -33,9 +33,10 @@ EventLoop::EventLoop()
       _wakeupChannel_(new Channel(this, _wakeupFd_)),
       _callingPendingFunctors_(false)
 {
+    LOG_DEBUG("EventLoop create %p in thread %d", this, _threadId_);
     if (t_loopInThisThread != nullptr)
     {
-        LOG_FATAL("");
+        LOG_FATAL("Another EventLoop %d exists in this thread %d", t_loopInThisThread, _threadId_);
     }
     else
     {
@@ -57,6 +58,7 @@ void EventLoop::loop() // 开启事件循环
 {
     _looping_ = true;
     _quit_ = false;
+    LOG_INFO("EventLoop %p start looping", this);
     while (!_quit_)
     {
         _activeChannels_.clear();
@@ -67,6 +69,7 @@ void EventLoop::loop() // 开启事件循环
         }
         doPendingFunctor();
     }
+    LOG_INFO("EventLoop %p stop looping", this);
     _looping_ = true;
 }
 
@@ -122,7 +125,7 @@ void EventLoop::wakeup()
     ssize_t n = write(_wakeupFd_, &one, sizeof(one));
     if (n != sizeof(one))
     {
-        LOG_ERROR("read the _wakeupFd_ error");
+        LOG_ERROR("write the _wakeupFd_ error");
     }
 }
 
@@ -141,6 +144,7 @@ bool EventLoop::hasChannel(Channel *channel)
     return _poller_->hasPoller(channel);
 }
 
+// 这个函数需要加锁，那是因为
 void EventLoop::doPendingFunctor() // 执行回调
 {
     std::vector<Functor> functors;
