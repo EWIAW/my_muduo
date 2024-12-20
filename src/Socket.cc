@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <netinet/tcp.h>
 
+#include <string.h>
+
 #include "Socket.h"
 #include "Logger.h"
 
@@ -16,7 +18,7 @@ void Socket::bindAddress(const InetAddress &localaddr)
     int ret = bind(_sockfd_, (sockaddr *)localaddr.getSockAddr(), sizeof(sockaddr_in));
     if (ret == -1)
     {
-        LOG_FATAL("bind error");
+        LOG_FATAL("bind error , errno : %d , reason : %s", errno, strerror(errno));
     }
 }
 
@@ -25,10 +27,11 @@ void Socket::listen()
     int ret = ::listen(_sockfd_, 1024);
     if (ret == -1)
     {
-        LOG_FATAL("listen error");
+        LOG_FATAL("listen error , errno : %d , reason : %s", errno, strerror(errno));
     }
 }
 
+// 参数为 输出型参数
 int Socket::accept(InetAddress *peeraddr)
 {
     sockaddr_in addr;
@@ -47,28 +50,34 @@ void Socket::shutdownWrite()
     int ret = shutdown(_sockfd_, SHUT_WR);
     if (ret < 0)
     {
-        LOG_ERROR("shutdownWrite error");
+        LOG_ERROR("shutdownWrite error : %d , reason : %s", errno, strerror(errno));
     }
 }
 
+// 禁用/启用 Nagle 算法。
+// Nagle 算法通过合并小数据包减少网络流量，但会增加延迟。
+// 设置 TCP_NODELAY 为 1 可以禁用该算法，适用于低延迟要求的应用（如实时通信）。
 void Socket::setTcpNoDelay(bool on)
 {
     int optval = on ? 1 : 0;
     ::setsockopt(_sockfd_, IPPROTO_TCP, TCP_NODELAY, &optval, sizeof(optval));
 }
 
+// 允许快速重新绑定地址（如服务器重启后可立即复用绑定的端口）
 void Socket::setReuseAddr(bool on)
 {
     int optval = on ? 1 : 0;
     ::setsockopt(_sockfd_, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
 }
 
+// 多个进程或线程可以绑定同一端口，常用于高并发服务。
 void Socket::setReusePort(bool on)
 {
     int optval = on ? 1 : 0;
     ::setsockopt(_sockfd_, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 }
 
+// 保活机制定期检测连接是否存活，适用于长时间空闲的 TCP 连接。
 void Socket::setKeepAlive(bool on)
 {
     int optval = on ? 1 : 0;

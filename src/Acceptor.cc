@@ -2,6 +2,8 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include <string.h>
+
 #include "Acceptor.h"
 #include "Logger.h"
 
@@ -10,7 +12,7 @@ static int createNonblocking()
     int sockfd = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
     if (sockfd < 0)
     {
-        LOG_FATAL();
+        LOG_FATAL("listen socket create error , errno : %d , reason : %s", errno, strerror(errno));
     }
 }
 
@@ -58,9 +60,10 @@ void Acceptor::handlerRead()
     }
     else
     {
+        LOG_ERROR("accept error , errno : %d , reason : %s", errno, strerror(errno));
         if (errno == EMFILE)
         {
-            LOG_ERROR();
+            LOG_ERROR("sockfd reached limit"); // 说明可以建立的连接已达上限
         }
     }
 }

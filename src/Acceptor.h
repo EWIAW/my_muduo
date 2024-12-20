@@ -24,6 +24,7 @@ public:
 private:
     void handlerRead();
 
+private:
     EventLoop *_loop_;
     Socket _acceptSocket_;
     Channel _acceptChannel_;
