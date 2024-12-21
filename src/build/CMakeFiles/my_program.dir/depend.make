@@ -73,8 +73,21 @@ CMakeFiles/my_program.dir/Socket.cc.o: ../Logger.h
 CMakeFiles/my_program.dir/Socket.cc.o: ../Socket.cc
 CMakeFiles/my_program.dir/Socket.cc.o: ../Socket.h
 
-CMakeFiles/my_program.dir/Tcpserver.cc.o: ../Tcpserver.cc
-CMakeFiles/my_program.dir/Tcpserver.cc.o: ../Tcpserver.h
+CMakeFiles/my_program.dir/TcpConnection.cc.o: ../TcpConnection.cc
+
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../Acceptor.h
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../Callbacks.h
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../Channel.h
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../EventLoopThread.h
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../EventLoopThreadPool.h
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../InetAddress.h
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../Logger.h
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../Socket.h
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../TcpServer.cc
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../TcpServer.h
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../Thread.h
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../Timestamp.h
+CMakeFiles/my_program.dir/TcpServer.cc.o: ../noncopyable.h
 
 CMakeFiles/my_program.dir/Thread.cc.o: ../CurrentThread.h
 CMakeFiles/my_program.dir/Thread.cc.o: ../Thread.cc

@@ -10,6 +10,7 @@
 #include "Acceptor.h"
 #include "EventLoopThreadPool.h"
 #include "noncopyable.h"
+#include "InetAddress.h"
 
 class EventLoop;
 
@@ -26,24 +27,24 @@ public:
     };
 
     TcpServer(EventLoop *loop,
-              std::string ipPort,
-              std::string name,
+              const InetAddress &listenAddr,
+              const std::string &nameArg,
               Option option = kNoReusePort);
 
     ~TcpServer();
 
-    void setThreadInitCallback(const ThreadInitCallback &cb) { _threadInitCallback_ = std::move(cb); }
-    void setConnectionCallback(const ConnectionCallback &cb) { _connectionCallback_ = std::move(cb); }
+    void setThreadInitCallback(const ThreadInitCallback &cb) { _threadInitCallback_ = cb; }
+    void setConnectionCallback(const ConnectionCallback &cb) { _connectionCallback_ = cb; }
     // void setCloseCallback(const CloseCallback &cb) { _closeCallback_ = std::move(cb); }
-    void setWriteCompleteCallback(const WriteCompleteCallback &cb) { _writeCompleteCallback_ = std::move(cb); }
-    void setMessageCallback(const MessageCallback &cb) { _messageCallback_ = std::move(cb); }
+    void setWriteCompleteCallback(const WriteCompleteCallback &cb) { _writeCompleteCallback_ = cb; }
+    void setMessageCallback(const MessageCallback &cb) { _messageCallback_ = cb; }
 
     void setThreadNum(const int numThreads);
 
     void start();
 
 private:
-    void newConnection(int sockfd, InetAddress &peerAddr);
+    void newConnection(int sockfd, const InetAddress &peerAddr);
     void removeConnection(const TcpConnectionPtr &conn);
     void removeConnectionInLoop(const TcpConnectionPtr &conn);
 
@@ -65,7 +66,7 @@ private:
 
     ThreadInitCallback _threadInitCallback_;
 
-    std::atomic_int _stated_;
-    int nextConnId_;
+    std::atomic_int _started_;
+    int _nextConnId_;
     ConnectionMap _connectionMap; // 保存所有连接
 };

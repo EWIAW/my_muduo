@@ -378,29 +378,53 @@ Socket.cc.s:
 	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Socket.cc.s
 .PHONY : Socket.cc.s
 
-Tcpserver.o: Tcpserver.cc.o
-.PHONY : Tcpserver.o
+TcpConnection.o: TcpConnection.cc.o
+.PHONY : TcpConnection.o
 
 # target to build an object file
-Tcpserver.cc.o:
-	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Tcpserver.cc.o
-.PHONY : Tcpserver.cc.o
+TcpConnection.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/TcpConnection.cc.o
+.PHONY : TcpConnection.cc.o
 
-Tcpserver.i: Tcpserver.cc.i
-.PHONY : Tcpserver.i
+TcpConnection.i: TcpConnection.cc.i
+.PHONY : TcpConnection.i
 
 # target to preprocess a source file
-Tcpserver.cc.i:
-	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Tcpserver.cc.i
-.PHONY : Tcpserver.cc.i
+TcpConnection.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/TcpConnection.cc.i
+.PHONY : TcpConnection.cc.i
 
-Tcpserver.s: Tcpserver.cc.s
-.PHONY : Tcpserver.s
+TcpConnection.s: TcpConnection.cc.s
+.PHONY : TcpConnection.s
 
 # target to generate assembly for a file
-Tcpserver.cc.s:
-	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/Tcpserver.cc.s
-.PHONY : Tcpserver.cc.s
+TcpConnection.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/TcpConnection.cc.s
+.PHONY : TcpConnection.cc.s
+
+TcpServer.o: TcpServer.cc.o
+.PHONY : TcpServer.o
+
+# target to build an object file
+TcpServer.cc.o:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/TcpServer.cc.o
+.PHONY : TcpServer.cc.o
+
+TcpServer.i: TcpServer.cc.i
+.PHONY : TcpServer.i
+
+# target to preprocess a source file
+TcpServer.cc.i:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/TcpServer.cc.i
+.PHONY : TcpServer.cc.i
+
+TcpServer.s: TcpServer.cc.s
+.PHONY : TcpServer.s
+
+# target to generate assembly for a file
+TcpServer.cc.s:
+	$(MAKE) -f CMakeFiles/my_program.dir/build.make CMakeFiles/my_program.dir/TcpServer.cc.s
+.PHONY : TcpServer.cc.s
 
 Thread.o: Thread.cc.o
 .PHONY : Thread.o
@@ -516,9 +540,12 @@ help:
 	@echo "... Socket.o"
 	@echo "... Socket.i"
 	@echo "... Socket.s"
-	@echo "... Tcpserver.o"
-	@echo "... Tcpserver.i"
-	@echo "... Tcpserver.s"
+	@echo "... TcpConnection.o"
+	@echo "... TcpConnection.i"
+	@echo "... TcpConnection.s"
+	@echo "... TcpServer.o"
+	@echo "... TcpServer.i"
+	@echo "... TcpServer.s"
 	@echo "... Thread.o"
 	@echo "... Thread.i"
 	@echo "... Thread.s"

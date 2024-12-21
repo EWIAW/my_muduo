@@ -14,19 +14,19 @@ InetAddress::InetAddress(const struct sockaddr_in &addr)
 {
 }
 
-std::string InetAddress::GetIp()
+std::string InetAddress::GetIp() const
 {
     char buffer[32] = {0};
     inet_ntop(AF_INET, &addr_.sin_addr, buffer, sizeof(buffer) - 1);
     return buffer;
 }
 
-uint16_t InetAddress::GetPort()
+uint16_t InetAddress::GetPort() const
 {
     return ntohs(addr_.sin_port);
 }
 
-std::string InetAddress::GetIpPort()
+std::string InetAddress::GetIpPort() const
 {
     char ip[32] = {0};
     char port[32] = {0};
