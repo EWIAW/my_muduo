@@ -10,6 +10,9 @@ CMakeFiles/my_program.dir/Acceptor.cc.o: ../Socket.h
 CMakeFiles/my_program.dir/Acceptor.cc.o: ../Timestamp.h
 CMakeFiles/my_program.dir/Acceptor.cc.o: ../noncopyable.h
 
+CMakeFiles/my_program.dir/Buffer.cc.o: ../Buffer.cc
+CMakeFiles/my_program.dir/Buffer.cc.o: ../Buffer.h
+
 CMakeFiles/my_program.dir/Channel.cc.o: ../Channel.cc
 CMakeFiles/my_program.dir/Channel.cc.o: ../Channel.h
 CMakeFiles/my_program.dir/Channel.cc.o: ../CurrentThread.h

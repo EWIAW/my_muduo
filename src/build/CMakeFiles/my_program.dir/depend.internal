@@ -10,6 +10,9 @@ CMakeFiles/my_program.dir/Acceptor.cc.o
  /home/zrb/my_muduo/my_muduo/src/Socket.h
  /home/zrb/my_muduo/my_muduo/src/Timestamp.h
  /home/zrb/my_muduo/my_muduo/src/noncopyable.h
+CMakeFiles/my_program.dir/Buffer.cc.o
+ /home/zrb/my_muduo/my_muduo/src/Buffer.cc
+ /home/zrb/my_muduo/my_muduo/src/Buffer.h
 CMakeFiles/my_program.dir/Channel.cc.o
  /home/zrb/my_muduo/my_muduo/src/Channel.cc
  /home/zrb/my_muduo/my_muduo/src/Channel.h
