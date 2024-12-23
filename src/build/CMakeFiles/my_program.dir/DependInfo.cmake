@@ -1,37 +1,35 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
-SET(CMAKE_DEPENDS_LANGUAGES
-  "CXX"
+set(CMAKE_DEPENDS_LANGUAGES
   )
-# The set of files for implicit dependencies of each language:
-SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/zrb/my_muduo/my_muduo/src/Acceptor.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/Acceptor.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/Buffer.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/Buffer.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/Channel.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/Channel.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/CurrentThread.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/CurrentThread.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/DefaultPoller.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/DefaultPoller.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/EPollPoller.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/EPollPoller.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/EventLoop.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/EventLoop.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/EventLoopThread.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/EventLoopThread.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/EventLoopThreadPool.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/EventLoopThreadPool.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/InetAddress.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/InetAddress.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/Poller.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/Poller.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/Socket.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/Socket.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/TcpConnection.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/TcpConnection.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/TcpServer.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/TcpServer.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/Thread.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/Thread.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/Timestamp.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/Timestamp.cc.o"
-  "/home/zrb/my_muduo/my_muduo/src/main.cc" "/home/zrb/my_muduo/my_muduo/src/build/CMakeFiles/my_program.dir/main.cc.o"
+
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/root/linux/my_muduo/src/Acceptor.cc" "CMakeFiles/my_program.dir/Acceptor.cc.o" "gcc" "CMakeFiles/my_program.dir/Acceptor.cc.o.d"
+  "/root/linux/my_muduo/src/Buffer.cc" "CMakeFiles/my_program.dir/Buffer.cc.o" "gcc" "CMakeFiles/my_program.dir/Buffer.cc.o.d"
+  "/root/linux/my_muduo/src/Channel.cc" "CMakeFiles/my_program.dir/Channel.cc.o" "gcc" "CMakeFiles/my_program.dir/Channel.cc.o.d"
+  "/root/linux/my_muduo/src/CurrentThread.cc" "CMakeFiles/my_program.dir/CurrentThread.cc.o" "gcc" "CMakeFiles/my_program.dir/CurrentThread.cc.o.d"
+  "/root/linux/my_muduo/src/DefaultPoller.cc" "CMakeFiles/my_program.dir/DefaultPoller.cc.o" "gcc" "CMakeFiles/my_program.dir/DefaultPoller.cc.o.d"
+  "/root/linux/my_muduo/src/EPollPoller.cc" "CMakeFiles/my_program.dir/EPollPoller.cc.o" "gcc" "CMakeFiles/my_program.dir/EPollPoller.cc.o.d"
+  "/root/linux/my_muduo/src/EventLoop.cc" "CMakeFiles/my_program.dir/EventLoop.cc.o" "gcc" "CMakeFiles/my_program.dir/EventLoop.cc.o.d"
+  "/root/linux/my_muduo/src/EventLoopThread.cc" "CMakeFiles/my_program.dir/EventLoopThread.cc.o" "gcc" "CMakeFiles/my_program.dir/EventLoopThread.cc.o.d"
+  "/root/linux/my_muduo/src/EventLoopThreadPool.cc" "CMakeFiles/my_program.dir/EventLoopThreadPool.cc.o" "gcc" "CMakeFiles/my_program.dir/EventLoopThreadPool.cc.o.d"
+  "/root/linux/my_muduo/src/InetAddress.cc" "CMakeFiles/my_program.dir/InetAddress.cc.o" "gcc" "CMakeFiles/my_program.dir/InetAddress.cc.o.d"
+  "/root/linux/my_muduo/src/Poller.cc" "CMakeFiles/my_program.dir/Poller.cc.o" "gcc" "CMakeFiles/my_program.dir/Poller.cc.o.d"
+  "/root/linux/my_muduo/src/Socket.cc" "CMakeFiles/my_program.dir/Socket.cc.o" "gcc" "CMakeFiles/my_program.dir/Socket.cc.o.d"
+  "/root/linux/my_muduo/src/TcpConnection.cc" "CMakeFiles/my_program.dir/TcpConnection.cc.o" "gcc" "CMakeFiles/my_program.dir/TcpConnection.cc.o.d"
+  "/root/linux/my_muduo/src/TcpServer.cc" "CMakeFiles/my_program.dir/TcpServer.cc.o" "gcc" "CMakeFiles/my_program.dir/TcpServer.cc.o.d"
+  "/root/linux/my_muduo/src/Thread.cc" "CMakeFiles/my_program.dir/Thread.cc.o" "gcc" "CMakeFiles/my_program.dir/Thread.cc.o.d"
+  "/root/linux/my_muduo/src/Timestamp.cc" "CMakeFiles/my_program.dir/Timestamp.cc.o" "gcc" "CMakeFiles/my_program.dir/Timestamp.cc.o.d"
+  "/root/linux/my_muduo/src/main.cc" "CMakeFiles/my_program.dir/main.cc.o" "gcc" "CMakeFiles/my_program.dir/main.cc.o.d"
   )
-SET(CMAKE_CXX_COMPILER_ID "GNU")
 
 # Targets to which this target links.
-SET(CMAKE_TARGET_LINKED_INFO_FILES
+set(CMAKE_TARGET_LINKED_INFO_FILES
   )
 
-# The include file search paths:
-SET(CMAKE_C_TARGET_INCLUDE_PATH
-  ".."
-  )
-SET(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
-SET(CMAKE_Fortran_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
-SET(CMAKE_ASM_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")
