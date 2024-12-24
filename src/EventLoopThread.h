@@ -5,10 +5,11 @@
 #include <string>
 
 #include "Thread.h"
+#include "noncopyable.h"
 
 class EventLoop;
 
-class EventLoopThread
+class EventLoopThread : noncopyable
 {
     using ThreadInitCallback = std::function<void(EventLoop *)>;
 
@@ -19,6 +20,7 @@ public:
     EventLoop *startLoop();
 
 private:
+    // 创建线程时，线程需要运行的函数
     void threadFunc();
 
 private:
