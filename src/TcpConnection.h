@@ -5,14 +5,16 @@
 
 #include "InetAddress.h"
 #include "Callbacks.h"
-#include "Buffer.h"
 #include "Timestamp.h"
+#include "Buffer.h"
+#include "noncopyable.h"
 
 class EventLoop;
 class Socket;
 class Channel;
+class Buffer;
 
-class TcpConnection
+class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnection>
 {
     enum StateE
     {
@@ -66,7 +68,7 @@ private:
 private:
     // 记录连接的状态
 
-    EventLoop *_loop_;  
+    EventLoop *_loop_;
     const std::string _name_;
     std::atomic_int _state_; // 记录连接的状态
     bool _reading_;
