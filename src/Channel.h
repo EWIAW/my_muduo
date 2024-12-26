@@ -32,7 +32,7 @@ public:
 
     int fd() const { return _fd_; }
     int events() { return _events_; }
-    int SetRevents(int revents) { _revents_ = revents; }
+    void SetRevents(int revents) { _revents_ = revents; }
 
     // 设置fd相应的事件状态
     void EnableReading()
