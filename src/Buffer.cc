@@ -9,7 +9,7 @@ ssize_t Buffer::readfd(int fd, int *saveErrno) // 从fd上读取数据
 
     const size_t writeable = writeableBytes();
     struct iovec vec[2];
-    vec[0].iov_base = beginWrite();
+    vec[0].iov_base = begin() + _writerIndex_;
     vec[0].iov_len = writeable;
 
     vec[1].iov_base = extrabuffer;
@@ -22,7 +22,7 @@ ssize_t Buffer::readfd(int fd, int *saveErrno) // 从fd上读取数据
     {
         *saveErrno = errno;
     }
-    if (n <= writeable)
+    else if (n <= writeable)
     {
         _writerIndex_ += n;
     }

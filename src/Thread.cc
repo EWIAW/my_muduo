@@ -6,7 +6,7 @@
 
 std::atomic_int Thread::_numCreated_(0); // 记录创建线程的数量
 
-Thread::Thread(ThreadFunc cb, std::string tname)
+Thread::Thread(ThreadFunc cb, const std::string &tname)
     : _start_(false),
       _join_(false),
       _tid_(0),

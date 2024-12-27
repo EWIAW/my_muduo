@@ -38,17 +38,18 @@ TcpServer::~TcpServer()
         TcpConnectionPtr conn(item.second);
         item.second.reset();
 
-        (conn->getLoop())->runInLoop(std::bind(&TcpConnection::connectDestroyed, conn));
+        conn->getLoop()->runInLoop(std::bind(&TcpConnection::connectDestroyed, conn));
     }
 }
 
-void TcpServer::setThreadNum(const int numThreads)
+void TcpServer::setThreadNum(int numThreads)
 {
     _threadPool_->setThreadNum(numThreads);
 }
 
 void TcpServer::start()
 {
+    LOG_DEBUG("TcpServer::start");
     if (_started_++ == 0)
     {
         _threadPool_->start(_threadInitCallback_);

@@ -11,6 +11,10 @@
 #include "EventLoopThreadPool.h"
 #include "noncopyable.h"
 #include "InetAddress.h"
+#include "Logger.h"
+#include "TcpConnection.h"
+#include "EventLoop.h"
+#include "Buffer.h"
 
 class EventLoop;
 
@@ -39,7 +43,7 @@ public:
     void setWriteCompleteCallback(const WriteCompleteCallback &cb) { _writeCompleteCallback_ = cb; }
     void setMessageCallback(const MessageCallback &cb) { _messageCallback_ = cb; }
 
-    void setThreadNum(const int numThreads);
+    void setThreadNum(int numThreads);
 
     void start();
 

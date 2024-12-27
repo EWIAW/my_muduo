@@ -11,7 +11,7 @@
 #define FATAL "FATAL" // 错误日志宏
 
 // 默认日志等级为信息类日志
-#define DEFAULT_LOG_LEVEL INFO
+// #define DEFAULT_LOG_LEVEL
 
 // 日志宏函数
 // 需要输出            时间        文件名   第几行    日志信息
@@ -19,8 +19,6 @@
 #define LOG(LEVEL, format, ...)                                                                                                         \
     do                                                                                                                                  \
     {                                                                                                                                   \
-        if (DEFAULT_LOG_LEVEL > LEVEL)                                                                                                  \
-            break;                                                                                                                      \
         time_t tp = time(nullptr);                                                                                                      \
         struct tm *lt = localtime(&tp);                                                                                                 \
         char buffer[32];                                                                                                                \
@@ -34,3 +32,6 @@
 #define LOG_DEBUG(format, ...) LOG(DEBUG, format, ##__VA_ARGS__)
 #define LOG_ERROR(format, ...) LOG(ERROR, format, ##__VA_ARGS__)
 #define LOG_FATAL(format, ...) LOG(FATAL, format, ##__VA_ARGS__)
+
+// if (DEFAULT_LOG_LEVEL == "NOT")
+//     break;

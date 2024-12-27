@@ -28,7 +28,7 @@ public:
     void quit(); // 退出事件循环
 
     // 返回poll(epoll_wait)被调用的时间
-    Timestamp pollReturnTime() { return _pollReturnTIme_; }
+    Timestamp pollReturnTime() const { return _pollReturnTIme_; }
 
     // 在当前loop中执行回调
     void runInLoop(Functor cb);

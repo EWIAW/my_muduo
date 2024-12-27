@@ -33,10 +33,10 @@ public:
     static Poller *newDefaultPoller(EventLoop *loop);
 
 protected:
-    // 用于管理sockfd和channel通道的成员变量
+    // 用于管理sockfd和channel通道，因为一个poller里面会有很多个channel
     using ChannelMap = std::unordered_map<int, Channel *>;
     ChannelMap _channelmap_;
 
 private:
-    EventLoop *_ownerloop_;
+    EventLoop *_ownerloop_; // 一个poller所属一个EventLoop
 };

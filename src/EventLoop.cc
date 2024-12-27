@@ -13,7 +13,7 @@ __thread EventLoop *t_loopInThisThread = nullptr;
 const int kPollTimeMs = 10000;
 
 // 创建wakeupfd，用来唤醒subloop来处理新的channel
-int createEventFd()
+int createEventFd() // ？？？
 {
     int evtfd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
     if (evtfd < 0)
@@ -70,12 +70,12 @@ void EventLoop::loop() // 开启事件循环
         doPendingFunctor();
     }
     LOG_INFO("EventLoop %p stop looping", this);
-    _looping_ = true;
+    _looping_ = false;
 }
 
 void EventLoop::quit() // 退出事件循环
 {
-    _quit_ = false;
+    _quit_ = true;
     if (!isInLoopThread())
     {
         wakeup();
@@ -85,6 +85,7 @@ void EventLoop::quit() // 退出事件循环
 // 在当前loop中执行回调
 void EventLoop::runInLoop(Functor cb)
 {
+    LOG_DEBUG("EventLoop::runInLoop");
     if (isInLoopThread())
     {
         cb();
@@ -152,7 +153,7 @@ void EventLoop::doPendingFunctor() // 执行回调
 
     {
         std::unique_lock<std::mutex> lock(_mutex_);
-        _pendingFunctors_.swap(functors);
+        functors.swap(_pendingFunctors_);
     }
 
     for (const Functor &cb : functors)

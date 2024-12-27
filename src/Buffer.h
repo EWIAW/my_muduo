@@ -13,8 +13,11 @@
 class Buffer
 {
 public:
-    explicit Buffer()
-        : _buffer_(kCheapPrepend + kInitiaSize),
+    static const size_t kCheapPrepend = 8;
+    static const size_t kInitiaSize = 1024;
+
+    explicit Buffer(size_t initialSize = kInitiaSize)
+        : _buffer_(kCheapPrepend + initialSize),
           _readerIndex_(kCheapPrepend),
           _writerIndex_(kCheapPrepend)
     {
@@ -23,13 +26,13 @@ public:
     ~Buffer() = default;
 
     // 返回可读数据的大小
-    size_t readableBytes() { return _writerIndex_ - _readerIndex_; }
+    size_t readableBytes() const { return _writerIndex_ - _readerIndex_; }
 
     // 返回可写数据的大小
-    size_t writeableBytes() { return _buffer_.size() - _writerIndex_; }
+    size_t writeableBytes() const { return _buffer_.size() - _writerIndex_; }
 
     // 返回prepend的大小
-    size_t prependableBytes() { return _readerIndex_; }
+    size_t prependableBytes() const { return _readerIndex_; }
 
     // 返回缓冲区中可读数据的起始地址
     const char *peek() const { return begin() + _readerIndex_; }
@@ -100,9 +103,6 @@ private:
     std::vector<char> _buffer_;
     size_t _readerIndex_;
     size_t _writerIndex_;
-
-    static const size_t kCheapPrepend = 8;
-    static const size_t kInitiaSize = 1024;
 };
 // static成员变量不能直接在类中初始化
 // 但是static const成员变量可以在类中初始化

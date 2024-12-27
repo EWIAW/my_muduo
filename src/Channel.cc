@@ -13,7 +13,7 @@ Channel::Channel(EventLoop *loop, int fd)
       _fd_(fd),
       _events_(0),
       _revents_(0),
-      _index_(-1), //-1代表该channel为添加到poller中
+      _index_(-1), //-1代表该channel未添加到poller中
       _tied_(false)
 {
 }
@@ -22,12 +22,14 @@ Channel::~Channel()
 {
 }
 
-void Channel::tie(const std::shared_ptr<void> &obj) //???
+void Channel::tie(const std::shared_ptr<void> &obj) // ？？？
 {
     _tie_ = obj;
     _tied_ = true;
 }
 
+// channel的更新需要调用epoll_ctl，但是epoll_ctl是封装在Poller当中的，所以不能直接去嗲用
+// 而Poller有封装在EventLoop中，所以需要去调用EventLoop的update
 void Channel::update()
 {
     _loop_->updateChannel(this);
@@ -38,7 +40,8 @@ void Channel::remove()
     _loop_->removeChannel(this);
 }
 
-void Channel::HandlerEvent(Timestamp receiveTime) //???
+// channel得到poller通知后，处理事件
+void Channel::HandlerEvent(Timestamp receiveTime) // ？？？
 {
     if (_tied_)
     {

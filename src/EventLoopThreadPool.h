@@ -9,6 +9,7 @@
 #include "EventLoopThread.h"
 
 class EventLoop;
+class EventLoopThread;
 
 class EventLoopThreadPool : noncopyable
 {
@@ -18,7 +19,7 @@ public:
     EventLoopThreadPool(EventLoop *baseloop, const std::string &nameArg);
     ~EventLoopThreadPool();
 
-    void setThreadNum(const int numThreads) { _numsThread_ = numThreads; }
+    void setThreadNum(int numThreads) { _numsThread_ = numThreads; }
     void start(const ThreadInitCallback &cb = ThreadInitCallback());
 
     // 如果是多线程运行，则使用轮询的方式分配channel给subloop

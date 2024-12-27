@@ -28,7 +28,7 @@ EventLoop *EventLoopThread::startLoop()
     EventLoop *loop = nullptr;
     {
         std::unique_lock<std::mutex> lock(_mutex_);
-        while (loop == nullptr)
+        while (_loop_ == nullptr)
         {
             _cond_.wait(lock);
         }
@@ -37,6 +37,7 @@ EventLoop *EventLoopThread::startLoop()
     return loop;
 }
 
+// 创建新线程后，新线程会运行下面这个函数
 void EventLoopThread::threadFunc()
 {
     EventLoop loop;

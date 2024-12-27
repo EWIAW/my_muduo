@@ -4,6 +4,7 @@ namespace CurrentThread
 {
     __thread int t_cachedTid = 0;
 
+    // 获取线程id
     void cacheTid()
     {
         if (t_cachedTid == 0)

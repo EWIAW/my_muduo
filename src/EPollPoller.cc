@@ -33,9 +33,9 @@ EPollPoller::~EPollPoller()
 Timestamp EPollPoller::poll(int timeoutMs, ChannelLists *activeChannel)
 {
     LOG_DEBUG("func = %s , fd total count : %d", __FUNCTION__, _events_.size());
-    int numEvents = epoll_wait(_epollfd_, &*_events_.begin(), _events_.size(), timeoutMs);
+    int numEvents = epoll_wait(_epollfd_, &*_events_.begin(), static_cast<int>(_events_.size()), timeoutMs);
     int saveErrno = errno; // 提前保存errno，以防万一
-    Timestamp now = Timestamp::Now();
+    Timestamp now(Timestamp::Now());
     if (numEvents > 0)
     {
         LOG_INFO("epoll_wait success , event nums : %d", numEvents);
@@ -64,7 +64,7 @@ Timestamp EPollPoller::poll(int timeoutMs, ChannelLists *activeChannel)
 // 从poller中更新channel
 void EPollPoller::updateChannel(Channel *channel)
 {
-    const int index = channel->index();
+    const int index = channel->index();     // 获取channel当前连接的状态
     if (index == kNew || index == kDeleted) // 说明channel重来没有添加过，或者已经删除了
     {
         if (index == kNew)
@@ -109,9 +109,11 @@ void EPollPoller::removeChannel(Channel *channel)
 // 填写活跃的连接
 void EPollPoller::fillActiveChannel(int numEvents, ChannelLists *activeChannels) const
 {
+    // LOG_DEBUG("EPollPoller::fillActiveChannel EventList size : %d", _events_.size());
     for (int i = 0; i < numEvents; i++)
     {
         Channel *channel = static_cast<Channel *>(_events_[i].data.ptr);
+        LOG_DEBUG("fd = %d", channel->fd());
         channel->SetRevents(_events_[i].events);
         activeChannels->push_back(channel);
     }
@@ -121,13 +123,15 @@ void EPollPoller::fillActiveChannel(int numEvents, ChannelLists *activeChannels)
 // 即进行epoll_ctl系统调用的封装
 void EPollPoller::update(int operation, Channel *channel)
 {
-    int fd = channel->fd();
-
     struct epoll_event event;
     bzero(&event, sizeof(event));
-    event.data.ptr = channel;
-    event.data.fd = fd;
+
+    int fd = channel->fd();
+
     event.events = channel->events();
+    //event的data类型是一个联合体，所以，只能填一个数据
+    // event.data.fd = fd;
+    event.data.ptr = channel;
 
     if (epoll_ctl(_epollfd_, operation, fd, &event) < 0)
     {

@@ -8,11 +8,12 @@ Timestamp::Timestamp()
 {
 }
 
-Timestamp::Timestamp(const int64_t &seconds)
+Timestamp::Timestamp(int64_t seconds)
     : _seconds_(seconds)
 {
 }
 
+// 获取当前时间
 Timestamp Timestamp::Now()
 {
     return Timestamp(time(nullptr));

@@ -9,16 +9,16 @@
 class InetAddress
 {
 public:
-    explicit InetAddress(const std::string ip = "127.0.0.1", const uint16_t port = 0);
+    explicit InetAddress(uint16_t port = 0, std::string ip = "127.0.0.1");
     explicit InetAddress(const struct sockaddr_in &addr);
 
     std::string GetIp() const;
     uint16_t GetPort() const;
     std::string GetIpPort() const;
 
-    const sockaddr_in *getSockAddr() const { return &addr_; }
-    void setSockAddr(const struct sockaddr_in &addr) { addr_ = addr; }
+    const sockaddr_in *getSockAddr() const { return &_addr_; }
+    void setSockAddr(const struct sockaddr_in &addr) { _addr_ = addr; }
 
 private:
-    struct sockaddr_in addr_;
+    struct sockaddr_in _addr_;
 };

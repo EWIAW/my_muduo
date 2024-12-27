@@ -8,6 +8,7 @@
 #include "Timestamp.h"
 
 class EventLoop;
+class Channel;
 
 // 这个类主要是封装epoll的操作
 // 如epoll_create,epoll_ctl,epoll_wait;
@@ -25,7 +26,7 @@ public:
     void removeChannel(Channel *channel) override;
 
 private:
-    // 填写活跃的连接
+    // 填写活跃的连接，将底层fd所发生的事件填写到EventLoop的ChannelLists中
     void fillActiveChannel(int numEvents, ChannelLists *activeChannels) const;
     // 更新channel通道
     void update(int operation, Channel *channel);

@@ -6,6 +6,7 @@
 
 #include "Acceptor.h"
 #include "Logger.h"
+#include "InetAddress.h"
 
 static int createNonblocking()
 {
@@ -14,11 +15,12 @@ static int createNonblocking()
     {
         LOG_FATAL("listen socket create error , errno : %d , reason : %s", errno, strerror(errno));
     }
+    return sockfd;
 }
 
 Acceptor::Acceptor(EventLoop *loop, const InetAddress &listenAddr, bool reuseport)
     : _loop_(loop),
-      _acceptSocket_(createNonblocking()),
+      _acceptSocket_(createNonblocking()), // 创建listenfd
       _acceptChannel_(loop, _acceptSocket_.fd()),
       _listenning_(false)
 {

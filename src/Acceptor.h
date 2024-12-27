@@ -5,10 +5,11 @@
 #include "Socket.h"
 #include "Channel.h"
 #include "InetAddress.h"
+#include "noncopyable.h"
 
 class EventLoop;
 
-class Acceptor
+class Acceptor : noncopyable
 {
     using NewConnectionCallback = std::function<void(int sockfd, const InetAddress &)>;
 
@@ -25,7 +26,7 @@ private:
     void handlerRead();
 
 private:
-    EventLoop *_loop_;
+    EventLoop *_loop_; // mainloop
     Socket _acceptSocket_;
     Channel _acceptChannel_;
     NewConnectionCallback _newConnectionCallback_;

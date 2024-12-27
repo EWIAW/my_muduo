@@ -63,22 +63,23 @@ void TcpConnection::send(const std::string &buf) // 发送数据
 }
 
 // 在subloop里面发送数据
-void TcpConnection::sendInLoop(const void *message, size_t len)
+void TcpConnection::sendInLoop(const void *data, size_t len)
 {
     // 发送数据的过程可以分为两种情况：可以直接往sockfd写数据，往Buffer里写数据
-    ssize_t nwrote = 0;      // 已经写入的数据的长度
-    ssize_t remaining = len; // 未写入的数据的长度
+    ssize_t nwrote = 0;     // 已经写入的数据的长度
+    size_t remaining = len; // 未写入的数据的长度
     bool faultError = false;
 
     if (_state_ == kDisconnected)
     {
         LOG_ERROR("disconnected , give up writing!");
+        return;
     }
 
     // 1.尝试直接往sockfd写入数据
     if (!_channel_->IsWriting() && _outputBuffer_.readableBytes() == 0)
     {
-        nwrote = write(_channel_->fd(), message, len);
+        nwrote = write(_channel_->fd(), data, len);
         if (nwrote >= 0)
         {
             remaining = len - nwrote;
@@ -108,12 +109,12 @@ void TcpConnection::sendInLoop(const void *message, size_t len)
     {
         // 先判断是否越过水位线
         size_t oldlen = _outputBuffer_.readableBytes();
-        if (oldlen + remaining > _hightWaterMark_ && oldlen < _hightWaterMark_ && _hightWaterMarkCallback_)
+        if (oldlen + remaining >= _hightWaterMark_ && oldlen < _hightWaterMark_ && _hightWaterMarkCallback_)
         {
             _loop_->queueInLoop(std::bind(_hightWaterMarkCallback_, shared_from_this(), oldlen + remaining));
         }
 
-        _outputBuffer_.append((char *)message + nwrote, remaining);
+        _outputBuffer_.append((char *)data + nwrote, remaining);
         if (!_channel_->IsWriting())
         {
             _channel_->EnableWriting();
@@ -229,7 +230,7 @@ void TcpConnection::handleError()
     int err = 0;
     int optval;
     socklen_t optlen = sizeof(optval);
-    int n = getsockopt(_socket_->fd(), SOL_SOCKET, SO_ERROR, &optval, &optlen);
+    int n = getsockopt(_channel_->fd(), SOL_SOCKET, SO_ERROR, &optval, &optlen);
     if (n < 0)
     {
         err = errno;

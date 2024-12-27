@@ -20,6 +20,7 @@ void Socket::bindAddress(const InetAddress &localaddr)
     {
         LOG_FATAL("bind error , errno : %d , reason : %s", errno, strerror(errno));
     }
+    LOG_DEBUG("bind listenfd is success");
 }
 
 void Socket::listen()
@@ -29,6 +30,7 @@ void Socket::listen()
     {
         LOG_FATAL("listen error , errno : %d , reason : %s", errno, strerror(errno));
     }
+    LOG_DEBUG("listenfd is listening");
 }
 
 // 参数为 输出型参数

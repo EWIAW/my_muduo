@@ -6,19 +6,21 @@
 #include <functional>
 #include <atomic>
 
-class Thread
+#include "noncopyable.h"
+
+class Thread : noncopyable
 {
     using ThreadFunc = std::function<void()>;
 
 public:
-    explicit Thread(ThreadFunc cb, std::string tname = std::string());
+    explicit Thread(ThreadFunc cb, const std::string &tname = std::string());
     ~Thread();
 
     void start();
     void join();
 
-    bool started() { return _start_; }
-    pid_t tid() { return _tid_; }
+    bool started() const { return _start_; }
+    pid_t tid() const { return _tid_; }
     const std::string &name() { return _tname_; }
 
     static int numCreated() { return _numCreated_; }

@@ -5,7 +5,7 @@
 class Socket
 {
 public:
-    Socket(const int sockfd)
+    explicit Socket(const int sockfd)
         : _sockfd_(sockfd)
     {
     }

@@ -26,19 +26,19 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
 
 public:
     TcpConnection(EventLoop *loop,
-                  const std::string &nameArg,
+                  const std::string &name,
                   int sockfd,
                   const InetAddress &localAddr,
                   const InetAddress &peerAddr);
 
     ~TcpConnection();
 
-    EventLoop *getLoop() { return _loop_; }
+    EventLoop *getLoop() const { return _loop_; }
     const std::string &name() const { return _name_; }
-    const InetAddress &localAddress() { return _localAddr_; }
-    const InetAddress &peerAddress() { return _peerAddr_; }
+    const InetAddress &localAddress() const { return _localAddr_; }
+    const InetAddress &peerAddress() const { return _peerAddr_; }
 
-    bool connected() { return _state_ == kConnected; }
+    bool connected() const { return _state_ == kConnected; }
 
     void send(const std::string &buf); // 发送数据
     void shutdown();
@@ -47,7 +47,11 @@ public:
     void setCloseCallback(const CloseCallback &cb) { _closeCallback_ = cb; }
     void setWriteCompleteCallback(const WriteCompleteCallback &cb) { _writeCompleteCallback_ = cb; }
     void setMessageCallback(const MessageCallback &cb) { _messageCallback_ = cb; }
-    void setHightWaterMarkCallback(const HightWaterMarkCallback &cb) { _hightWaterMarkCallback_ = cb; }
+    void setHightWaterMarkCallback(const HightWaterMarkCallback &cb, size_t highWaterMark)
+    {
+        _hightWaterMarkCallback_ = cb;
+        _hightWaterMark_ = highWaterMark;
+    }
 
     // 建立连接
     void connectEstablished();

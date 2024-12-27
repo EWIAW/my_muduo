@@ -3,11 +3,12 @@
 #include <iostream>
 #include <string>
 
+// 时间戳类
 class Timestamp
 {
 public:
     Timestamp();
-    explicit Timestamp(const int64_t &seconds);
+    explicit Timestamp(int64_t seconds);
     static Timestamp Now();
     std::string To_String() const;
 
