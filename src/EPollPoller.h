@@ -37,3 +37,11 @@ private:
     int _epollfd_;
     EventList _events_; // 通过epoll_wait所得到的就绪事件都存储再这个vector中
 };
+// using EventList = std::vector<struct epoll_event>;
+// using ChannelLists = std::vector<Channel *>;
+
+// EventList和ChannelList的区别
+// EventList是传参为epoll_wait用的，因为epoll_wait的参数是固定的，即是一个struct epoll_wait的数组
+// 但是，当我们获取到返回事件就绪的fd时，希望得到的是，返回就绪fd的channel，
+// 因为channel中存储着事件就绪后需要调用的回调函数
+// 所以后续步骤中，需要将EventList中的就绪事件 给到 ChannelLists

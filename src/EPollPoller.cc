@@ -7,15 +7,15 @@
 #include "Logger.h"
 #include "Channel.h"
 
-// 对应channel的index
+// 对应channel的_index成员变量
 const int kNew = -1;    // channel未添加到poller中
 const int kAdded = 1;   // channel已添加到poller中
 const int kDeleted = 2; // channel已从poller中删除
 
 EPollPoller::EPollPoller(EventLoop *loop)
     : Poller(loop),
-      _events_(kInitEventListSize), // 构造eventlist数组
-      _epollfd_(epoll_create1(EPOLL_CLOEXEC))
+      _events_(kInitEventListSize),           // 构造eventlist数组的大小
+      _epollfd_(epoll_create1(EPOLL_CLOEXEC)) // EPOLL_CLOEXEC表示fork出来的新进程不会继承该文件描述符
 {
     if (_epollfd_ < 0)
     {
@@ -129,8 +129,8 @@ void EPollPoller::update(int operation, Channel *channel)
     int fd = channel->fd();
 
     event.events = channel->events();
-    //event的data类型是一个联合体，所以，只能填一个数据
-    // event.data.fd = fd;
+    // event的data类型是一个联合体，所以，只能填一个数据
+    //  event.data.fd = fd;
     event.data.ptr = channel;
 
     if (epoll_ctl(_epollfd_, operation, fd, &event) < 0)

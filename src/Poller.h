@@ -16,7 +16,7 @@ class Channel;
 class Poller : noncopyable
 {
 public:
-    using ChannelLists = std::vector<Channel *>;
+    using ChannelLists = std::vector<Channel *>; // 用来存储epoll_wait后所返回的就绪fd
 
     Poller(EventLoop *ownerloop);
     virtual ~Poller() = default;

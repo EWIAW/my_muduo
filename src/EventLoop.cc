@@ -6,7 +6,7 @@
 #include "Channel.h"
 #include "Logger.h"
 
-// 防止一个线程创建多个eventloop thread_local
+// 防止一个线程创建多个eventloop thread_local技术
 __thread EventLoop *t_loopInThisThread = nullptr;
 
 // 定义epoll_wait所设置的超时时间
@@ -73,7 +73,8 @@ void EventLoop::loop() // 开启事件循环
     _looping_ = false;
 }
 
-void EventLoop::quit() // 退出事件循环
+// 退出事件循环 ！！！
+void EventLoop::quit()
 {
     _quit_ = true;
     if (!isInLoopThread())
@@ -85,7 +86,7 @@ void EventLoop::quit() // 退出事件循环
 // 在当前loop中执行回调
 void EventLoop::runInLoop(Functor cb)
 {
-    LOG_DEBUG("EventLoop::runInLoop");
+    // LOG_DEBUG("EventLoop::runInLoop");
     if (isInLoopThread())
     {
         cb();
@@ -96,7 +97,7 @@ void EventLoop::runInLoop(Functor cb)
     }
 }
 
-// 把cb放入队列中，唤醒loop所在线程，执行cb
+// 把cb放入回调队列中，唤醒loop所在线程，执行cb
 void EventLoop::queueInLoop(Functor cb)
 {
     {
@@ -110,7 +111,8 @@ void EventLoop::queueInLoop(Functor cb)
     }
 }
 
-void EventLoop::handlerRead() // wake up
+// 用于wakeupFd的读事件就绪回调
+void EventLoop::handlerRead()
 {
     uint64_t one = 1;
     ssize_t n = read(_wakeupFd_, &one, sizeof(one));
@@ -120,6 +122,7 @@ void EventLoop::handlerRead() // wake up
     }
 }
 
+// 唤醒一个EventLoop就是往这个EventLoop里面的wakechannel写入数据，这样这个EventLoop的epoll_wait就会立即返回
 void EventLoop::wakeup()
 {
     uint64_t one = 1;
@@ -145,10 +148,10 @@ bool EventLoop::hasChannel(Channel *channel)
     return _poller_->hasPoller(channel);
 }
 
-// 这个函数需要加锁，那是因为
+// 这个函数需要加锁，那是因为mainloop有可能正在往subloop的_pendingFunctors_添加回调任务
 void EventLoop::doPendingFunctor() // 执行回调
 {
-    std::vector<Functor> functors;
+    std::vector<Functor> functors; // 使用临时的vector<Functor>那是因为避免mainloop因为等待锁而被阻塞
     _callingPendingFunctors_ = true;
 
     {

@@ -65,11 +65,11 @@ private:
 
 private:
     // 保存事件可读还是可写的状态
-    static const int kNoneEvent;
-    static const int kReadEvent;
-    static const int kWriteEvent;
+    static const int kNoneEvent;//代表该channel没有监听的事件
+    static const int kReadEvent;//代表该channel监听读事件
+    static const int kWriteEvent;//代表该channel监听写事件
 
-    EventLoop *_loop_;
+    EventLoop *_loop_;//这个channel所属那个循环
     const int _fd_;
     int _events_;  // 注册fd所监听的事件
     int _revents_; // 返回fd就绪的事件
@@ -78,7 +78,7 @@ private:
     std::weak_ptr<void> _tie_; // ？？？
     bool _tied_;               // ？？？
 
-    // 所发生事件的回调
+    // 当事件发生时，需要调用的回调
     ReadEventCallback _ReadCallback_;
     EventCallback _WriteCallback_;
     EventCallback _CloseCallback_;

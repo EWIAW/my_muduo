@@ -9,6 +9,7 @@ namespace CurrentThread
 
     void cacheTid();
 
+    // 获取线程id
     inline int tid()
     {
         if (__builtin_expect(t_cachedTid == 0, 0))
