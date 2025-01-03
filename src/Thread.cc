@@ -27,20 +27,19 @@ Thread::~Thread()
 void Thread::start()
 {
     _start_ = true;
-    sem_t sem;
+    sem_t sem; // 这里使用信号量的原因是以防万一，因为主线程创建一个新线程后，有可能去访问新线程的pid
     sem_init(&sem, false, 0);
 
     // 开启线程
     _thread_ = std::shared_ptr<std::thread>(new std::thread([&]()
                                                             {
-        // 获取线程的tid值
         _tid_ = CurrentThread::tid();
         sem_post(&sem);
-        // 开启一个新线程，专门执行该线程函数
         _func_(); }));
     sem_wait(&sem);
 }
 
+// 如果join被调用了，一般来说，是mainloop调用了subloop的join
 void Thread::join()
 {
     _join_ = true;

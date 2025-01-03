@@ -27,7 +27,7 @@ EventLoop *EventLoopThread::startLoop()
     _thread_.start();
     EventLoop *loop = nullptr;
     {
-        std::unique_lock<std::mutex> lock(_mutex_);
+        std::unique_lock<std::mutex> lock(_mutex_); // unique_lock和Lock_Guard一样，在构造时就会加锁
         while (_loop_ == nullptr)
         {
             _cond_.wait(lock);

@@ -29,5 +29,5 @@ private:
     Thread _thread_;
     std::mutex _mutex_;
     std::condition_variable _cond_;
-    ThreadInitCallback _callback_;
+    ThreadInitCallback _callback_; // 线程初始化函数回调
 };

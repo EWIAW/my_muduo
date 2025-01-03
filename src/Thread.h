@@ -35,6 +35,6 @@ private:
     std::shared_ptr<std::thread> _thread_;
     pid_t _tid_;
     std::string _tname_;
-    ThreadFunc _func_;
+    ThreadFunc _func_;                   // 创建线程后，线程要执行的函数
     static std::atomic_int _numCreated_; // 记录创建线程的数量
 };

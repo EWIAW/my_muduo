@@ -37,7 +37,7 @@ public:
     void queueInLoop(Functor cb);
 
     // 唤醒loop所在线程
-    void wakeup();
+    void wakeup(); // ！！！wakeup的核心思想是，避免subloop阻塞在epoll_wait中，让subloop尽快的从epoll_wait中脱离出来
 
     // Channel需要update，需要去调用poller的方法，但是这两个是两个独立的类，
     // 之间不能直接访问访问对方的成员函数，所有需要借助eventloop来访问
