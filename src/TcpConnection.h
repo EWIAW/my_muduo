@@ -14,6 +14,7 @@ class Socket;
 class Channel;
 class Buffer;
 
+// 用于封装一个TCP连接
 class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnection>
 {
     enum StateE

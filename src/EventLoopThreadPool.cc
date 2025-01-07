@@ -17,7 +17,7 @@ EventLoopThreadPool::~EventLoopThreadPool()
 
 void EventLoopThreadPool::start(const ThreadInitCallback &cb)
 {
-    LOG_DEBUG("EventLoopThreadPool::start , numsThread : %d",_numsThread_);
+    LOG_DEBUG("EventLoopThreadPool::start , numsThread : %d", _numsThread_);
     _started_ = true;
 
     for (int i = 0; i < _numsThread_; i++)
@@ -33,7 +33,6 @@ void EventLoopThreadPool::start(const ThreadInitCallback &cb)
     {
         cb(_baseLoop_);
     }
-    LOG_DEBUG("exit EventLoopThreadPool::start");
 }
 
 // 如果是多线程运行，则使用轮询的方式分配channel给subloop

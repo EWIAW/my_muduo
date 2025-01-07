@@ -5,6 +5,8 @@
 
 ssize_t Buffer::readfd(int fd, int *saveErrno) // 从fd上读取数据
 {
+    // 临时的缓冲区，如果从fd上读上来的数据长度超过了buffer中的writealbe，则将剩余的数据读到extrabuffer中，
+    // 这样做的好处是，高效
     char extrabuffer[65536] = {0};
 
     const size_t writeable = writeableBytes();

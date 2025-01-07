@@ -28,7 +28,7 @@ private:
 private:
     EventLoop *_loop_; // mainloop
     Socket _acceptSocket_;
-    Channel _acceptChannel_;
-    NewConnectionCallback _newConnectionCallback_;
+    Channel _acceptChannel_;                       // 把listenfd封装成一个channel交给mainloop进行监听
+    NewConnectionCallback _newConnectionCallback_; // 当这个listenfd有事件就绪的时候，所触发的回调
     bool _listenning_;
 };

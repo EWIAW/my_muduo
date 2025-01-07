@@ -22,6 +22,7 @@ EventLoopThread::~EventLoopThread()
     }
 }
 
+// 如果创建了多线程的subloop，则主线程就会运行下面这个函数
 EventLoop *EventLoopThread::startLoop()
 {
     _thread_.start();

@@ -8,6 +8,7 @@
 #include "Logger.h"
 #include "InetAddress.h"
 
+// 创建一个非阻塞的listenfd
 static int createNonblocking()
 {
     int sockfd = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
@@ -24,8 +25,8 @@ Acceptor::Acceptor(EventLoop *loop, const InetAddress &listenAddr, bool reusepor
       _acceptChannel_(loop, _acceptSocket_.fd()),
       _listenning_(false)
 {
-    _acceptSocket_.setReuseAddr(true);
-    _acceptSocket_.setReusePort(true);
+    _acceptSocket_.setReuseAddr(true);      // 设置是否重用地址
+    _acceptSocket_.setReusePort(reuseport); // 设置是否重用端口
     _acceptSocket_.bindAddress(listenAddr); // bind
     // TcpServer::start() Acceptor.listen  有新用户的连接，要执行一个回调（connfd=》channel=》subloop）
     // baseLoop => acceptChannel_(listenfd) =>
@@ -47,7 +48,7 @@ void Acceptor::listen()
 
 void Acceptor::handlerRead()
 {
-    InetAddress peerAddr;
+    InetAddress peerAddr; // 对端的地址和端口
     int connfd = _acceptSocket_.accept(&peerAddr);
     if (connfd >= 0)
     {

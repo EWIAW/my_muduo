@@ -72,7 +72,7 @@ void Socket::setReuseAddr(bool on)
     ::setsockopt(_sockfd_, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
 }
 
-// 多个进程或线程可以绑定同一端口，常用于高并发服务。
+// 多个进程或线程可以绑定同一端口，常用于高并发服务。？？？
 void Socket::setReusePort(bool on)
 {
     int optval = on ? 1 : 0;
