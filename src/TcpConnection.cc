@@ -12,7 +12,7 @@ static EventLoop *CheckLoopNotNull(EventLoop *loop)
 {
     if (loop == nullptr)
     {
-        LOG_FATAL("mainloop is null");
+        LOG_FATAL("loop is null");
     }
     return loop;
 }
@@ -30,7 +30,7 @@ TcpConnection::TcpConnection(EventLoop *loop,
       _channel_(new Channel(loop, sockfd)),
       _localAddr_(localAddr),
       _peerAddr_(peerAddr),
-      _hightWaterMark_(64 * 1024 * 1024)
+      _hightWaterMark_(64 * 1024 * 1024) // 64M
 {
     _channel_->SetReadCallback(std::bind(&TcpConnection::handleRead, this, std::placeholders::_1));
     _channel_->SetCloseCallback(std::bind(&TcpConnection::handlerClose, this));
@@ -72,7 +72,7 @@ void TcpConnection::sendInLoop(const void *data, size_t len)
 
     if (_state_ == kDisconnected)
     {
-        LOG_ERROR("disconnected , give up writing!");
+        LOG_ERROR("The TcpConnection is disconnected , give up writing!");
         return;
     }
 
@@ -83,7 +83,7 @@ void TcpConnection::sendInLoop(const void *data, size_t len)
         if (nwrote >= 0)
         {
             remaining = len - nwrote;
-            // 如果数据已经全部写完了，并且设置了写完回调
+            // 如果数据已经全部写完了，并且设置了写完后回调
             if (remaining == 0 && _writeCompleteCallback_)
             {
                 _loop_->queueInLoop(std::bind(_writeCompleteCallback_, shared_from_this()));
@@ -140,7 +140,7 @@ void TcpConnection::shutdownInLoop()
     }
 }
 
-// 建立连接
+// 建立连接？？？
 void TcpConnection::connectEstablished()
 {
     setState(kConnected);
@@ -222,7 +222,7 @@ void TcpConnection::handlerClose()
 
     TcpConnectionPtr connPtr(shared_from_this());
     _connectionCallback_(connPtr); // 执行连接关闭回调
-    _closeCallback_(connPtr);
+    `(connPtr);
 }
 
 void TcpConnection::handleError()

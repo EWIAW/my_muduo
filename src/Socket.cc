@@ -80,6 +80,7 @@ void Socket::setReusePort(bool on)
 }
 
 // 保活机制定期检测连接是否存活，适用于长时间空闲的 TCP 连接。
+// 如果on为true，即打开保活机制，若连接长时间未响应，则终止连接
 void Socket::setKeepAlive(bool on)
 {
     int optval = on ? 1 : 0;

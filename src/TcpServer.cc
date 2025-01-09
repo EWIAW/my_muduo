@@ -57,10 +57,12 @@ void TcpServer::start()
     }
 }
 
+// 有新连接到来的时候所调用的回调
 void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
 {
     // 先通过轮询算法获取一个subloop
     EventLoop *ioLoop = _threadPool_->getNextLoop();
+    // 给连接起一个名字
     char buf[64] = {0};
     snprintf(buf, sizeof(buf) - 1, "-%s#%d", _ipPort_.c_str(), _nextConnId_);
     _nextConnId_++;

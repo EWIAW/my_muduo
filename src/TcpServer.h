@@ -26,8 +26,8 @@ class TcpServer : noncopyable
 public:
     enum Option
     {
-        kNoReusePort,
-        kReusePort
+        kNoReusePort, // 不重用端口
+        kReusePort    // 重用端口
     };
 
     TcpServer(EventLoop *loop,
@@ -48,7 +48,7 @@ public:
     void start();
 
 private:
-    void newConnection(int sockfd, const InetAddress &peerAddr);
+    void newConnection(int sockfd, const InetAddress &peerAddr); // 有新连接到来的时候所调用的回调
     void removeConnection(const TcpConnectionPtr &conn);
     void removeConnectionInLoop(const TcpConnectionPtr &conn);
 
@@ -63,14 +63,14 @@ private:
 
     std::shared_ptr<EventLoopThreadPool> _threadPool_;
 
-    ConnectionCallback _connectionCallback_;
+    ConnectionCallback _connectionCallback_; // 连接状态变更时发生的回调
     // CloseCallback _closeCallback_;
     WriteCompleteCallback _writeCompleteCallback_;
     MessageCallback _messageCallback_;
 
     ThreadInitCallback _threadInitCallback_;
 
-    std::atomic_int _started_;
+    std::atomic_int _started_; // 表示服务器启动状态，0表示未启动
     int _nextConnId_;
     ConnectionMap _connectionMap_; // 保存所有连接
 };

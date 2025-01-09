@@ -17,6 +17,7 @@ class Buffer;
 // 用于封装一个TCP连接
 class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnection>
 {
+    // 记录连接的状态
     enum StateE
     {
         kDisconnected,
@@ -62,17 +63,17 @@ public:
 private:
     void setState(StateE state) { _state_ = state; }
 
+    // 下面四个函数对应channel的四个回调
     void handleRead(Timestamp receiveTime);
     void handleWrite();
     void handlerClose();
     void handleError();
 
+    // 在这个TcpConnection所属的EventLoop中发送数据
     void sendInLoop(const void *message, size_t len);
-    void shutdownInLoop();
+    void shutdownInLoop(); // 关闭连接
 
 private:
-    // 记录连接的状态
-
     EventLoop *_loop_;
     const std::string _name_;
     std::atomic_int _state_; // 记录连接的状态
@@ -81,16 +82,17 @@ private:
     std::unique_ptr<Socket> _socket_;
     std::unique_ptr<Channel> _channel_;
 
-    const InetAddress _localAddr_;
-    const InetAddress _peerAddr_;
+    const InetAddress _localAddr_; // 指的是服务端的地址
+    const InetAddress _peerAddr_;  // 指的是客户端的地址
 
-    ConnectionCallback _connectionCallback_;
+    // 下面五个回调是TcpServer设置给T产品Connection的
+    ConnectionCallback _connectionCallback_; // 连接状态变更时调用的回调
     CloseCallback _closeCallback_;
     WriteCompleteCallback _writeCompleteCallback_;
     MessageCallback _messageCallback_;
     HightWaterMarkCallback _hightWaterMarkCallback_;
     size_t _hightWaterMark_;
 
-    Buffer _inputBuffer_;
-    Buffer _outputBuffer_;
+    Buffer _inputBuffer_;  // 输入缓冲区，即服务器从上面读取客户端的数据
+    Buffer _outputBuffer_; // 输出缓冲区，即服务器发送给客户端的数据
 };
