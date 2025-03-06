@@ -222,7 +222,7 @@ void TcpConnection::handlerClose()
 
     TcpConnectionPtr connPtr(shared_from_this());
     _connectionCallback_(connPtr); // 执行连接关闭回调
-    `(connPtr);
+    _closeCallback_(connPtr);
 }
 
 void TcpConnection::handleError()
