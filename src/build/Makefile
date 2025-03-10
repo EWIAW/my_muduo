@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/linux/my_muduo/src
+CMAKE_SOURCE_DIR = /root/MyFile/my_muduo/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/linux/my_muduo/src/build
+CMAKE_BINARY_DIR = /root/MyFile/my_muduo/src/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux/my_muduo/src/build/CMakeFiles /root/linux/my_muduo/src/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/MyFile/my_muduo/src/build/CMakeFiles /root/MyFile/my_muduo/src/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux/my_muduo/src/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/MyFile/my_muduo/src/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -355,6 +355,36 @@ Thread.s:
 .PHONY : Thread.s
 
 # target to build an object file
+TimerTask.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/TimerTask.o
+.PHONY : TimerTask.o
+
+# target to preprocess a source file
+TimerTask.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/TimerTask.i
+.PHONY : TimerTask.i
+
+# target to generate assembly for a file
+TimerTask.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/TimerTask.s
+.PHONY : TimerTask.s
+
+# target to build an object file
+TimerWheel.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/TimerWheel.o
+.PHONY : TimerWheel.o
+
+# target to preprocess a source file
+TimerWheel.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/TimerWheel.i
+.PHONY : TimerWheel.i
+
+# target to generate assembly for a file
+TimerWheel.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/TimerWheel.s
+.PHONY : TimerWheel.s
+
+# target to build an object file
 Timestamp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/Timestamp.o
 .PHONY : Timestamp.o
@@ -423,6 +453,12 @@ help:
 	@echo "... Thread.o"
 	@echo "... Thread.i"
 	@echo "... Thread.s"
+	@echo "... TimerTask.o"
+	@echo "... TimerTask.i"
+	@echo "... TimerTask.s"
+	@echo "... TimerWheel.o"
+	@echo "... TimerWheel.i"
+	@echo "... TimerWheel.s"
 	@echo "... Timestamp.o"
 	@echo "... Timestamp.i"
 	@echo "... Timestamp.s"

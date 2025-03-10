@@ -31,6 +31,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/mymuduo.dir/TcpServer.o.d"
   "CMakeFiles/mymuduo.dir/Thread.o"
   "CMakeFiles/mymuduo.dir/Thread.o.d"
+  "CMakeFiles/mymuduo.dir/TimerTask.o"
+  "CMakeFiles/mymuduo.dir/TimerTask.o.d"
+  "CMakeFiles/mymuduo.dir/TimerWheel.o"
+  "CMakeFiles/mymuduo.dir/TimerWheel.o.d"
   "CMakeFiles/mymuduo.dir/Timestamp.o"
   "CMakeFiles/mymuduo.dir/Timestamp.o.d"
 )

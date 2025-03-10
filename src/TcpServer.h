@@ -44,6 +44,11 @@ public:
     void setMessageCallback(const MessageCallback &cb) { _messageCallback_ = cb; }
 
     void setThreadNum(int numThreads);
+    void setEnableInactiveRelease(int timeouts)
+    {
+        _timeouts_ = timeouts;
+        _enable_inactive_release_ = true;
+    }
 
     void start();
 
@@ -73,4 +78,7 @@ private:
     std::atomic_int _started_; // 表示服务器启动状态，0表示未启动
     int _nextConnId_;
     ConnectionMap _connectionMap_; // 保存所有连接
+
+    bool _enable_inactive_release_; // 是否开启非活跃连接超时销毁机制
+    int _timeouts_;                 // 非活跃连接超时时间
 };

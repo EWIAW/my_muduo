@@ -12,6 +12,7 @@
 #include "Poller.h"
 #include "CurrentThread.h"
 #include "noncopyable.h"
+#include "TimerWheel.h"
 
 class Channel;
 class Poller;
@@ -48,6 +49,12 @@ public:
     // 判断当前EventLoop是否在自己的线程中
     bool isInLoopThread() { return _threadId_ == CurrentThread::tid(); }
 
+    // 定时器操作
+    void TimerAdd(uint64_t id, uint32_t delay_time, const OnTimerTask &cb) { _timer_wheel_.TimerTaskAdd(id, delay_time, cb); }
+    void TimerRefresh(uint64_t id) { _timer_wheel_.TimerTaskRefresh(id); }
+    void TimerCancel(uint64_t id) { _timer_wheel_.TimerTaskCancel(id); }
+    bool TimerExist(uint64_t id) { return _timer_wheel_.TimerTaskIsExist(id); }
+
 private:
     void handlerRead();      // 用于wakeupFd的读事件就绪回调
     void doPendingFunctor(); // 执行已经存储好的回调
@@ -71,6 +78,8 @@ private:
     std::atomic_bool _callingPendingFunctors_; // 判断当前loop是否有需要/正在执行的回调
     std::vector<Functor> _pendingFunctors_;    // 存储loop所有需要执行的回调
     std::mutex _mutex_;
+
+    TimerWheel _timer_wheel_; // 一个EventLoop一个定时时间轮
 };
 // 我对_wakeupFd_的理解
 // 首先subloop线程一旦创建，就是无止境的loop(epoll_wait)，而且这里epoll_wait的超时时间是10秒

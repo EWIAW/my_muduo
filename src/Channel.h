@@ -31,30 +31,51 @@ public:
     void SetWriteCallback(EventCallback cb) { _WriteCallback_ = std::move(cb); }
     void SetCloseCallback(EventCallback cb) { _CloseCallback_ = std::move(cb); }
     void SetErrorCallback(EventCallback cb) { _ErrorCallback_ = std::move(cb); }
+    void SetEventCallback(EventCallback cb) { _EventCallback_ = std::move(cb); }
 
     // 防止channel被收到remove掉，channel还在执行回调
     void tie(const std::shared_ptr<void> &); // ？？？
 
     int fd() const { return _fd_; }
-    int events() { return _events_; } // 返回fd所注册的监听事件
+    int events() { return _events_; }                     // 返回fd所注册的监听事件
     void SetRevents(int revents) { _revents_ = revents; } // 设置fd所就绪的事件
 
     // 设置fd相应的事件状态，这里的update本质上是调用EventLoop来实现的，
     // 因为update是改变Poller类对象的信息，而channel和Poller是两个独立类，无法访问对方的成员函数
     // 所以需要去调用EventLoop的update成员函数
-    void EnableReading(){ _events_ |= kReadEvent; update(); }
-    void DisableReading(){ _events_ &= ~kReadEvent; update(); }
-    void EnableWriting(){ _events_ |= kWriteEvent; update(); }
-    void DisableWriting(){ _events_ &= ~kWriteEvent; update(); }
-    void DisableAll(){ _events_ = kNoneEvent; update(); }
+    void EnableReading()
+    {
+        _events_ |= kReadEvent;
+        update();
+    }
+    void DisableReading()
+    {
+        _events_ &= ~kReadEvent;
+        update();
+    }
+    void EnableWriting()
+    {
+        _events_ |= kWriteEvent;
+        update();
+    }
+    void DisableWriting()
+    {
+        _events_ &= ~kWriteEvent;
+        update();
+    }
+    void DisableAll()
+    {
+        _events_ = kNoneEvent;
+        update();
+    }
 
     // 判断fd当前所关心的事件
     bool IsNoneEvent() const { return _events_ == kNoneEvent; }
     bool IsReading() { return _events_ & kReadEvent; }
     bool IsWriting() { return _events_ & kWriteEvent; }
 
-    int index() { return _index_; } // 判断当前channel这个连接的状态
-    void Set_Index(int index) { _index_ = index; }// 设置channel当前连接的状态
+    int index() { return _index_; }                // 判断当前channel这个连接的状态
+    void Set_Index(int index) { _index_ = index; } // 设置channel当前连接的状态
 
     EventLoop *ownerloop() { return _loop_; } // 返回这个channel所属的EventLoop
     void remove();
@@ -65,11 +86,11 @@ private:
 
 private:
     // 保存事件可读还是可写的状态
-    static const int kNoneEvent;//代表该channel没有监听的事件
-    static const int kReadEvent;//代表该channel监听读事件
-    static const int kWriteEvent;//代表该channel监听写事件
+    static const int kNoneEvent;  // 代表该channel没有监听的事件
+    static const int kReadEvent;  // 代表该channel监听读事件
+    static const int kWriteEvent; // 代表该channel监听写事件
 
-    EventLoop *_loop_;//这个channel所属那个循环
+    EventLoop *_loop_; // 这个channel所属那个循环
     const int _fd_;
     int _events_;  // 注册fd所监听的事件
     int _revents_; // 返回fd就绪的事件
@@ -83,4 +104,5 @@ private:
     EventCallback _WriteCallback_;
     EventCallback _CloseCallback_;
     EventCallback _ErrorCallback_;
+    EventCallback _EventCallback_; // 触发任何事件后的回调
 };

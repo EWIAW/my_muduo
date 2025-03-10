@@ -8,8 +8,8 @@
 #include "Timestamp.h"
 #include "Buffer.h"
 #include "noncopyable.h"
+#include "EventLoop.h"
 
-class EventLoop;
 class Socket;
 class Channel;
 class Buffer;
@@ -28,6 +28,7 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
 
 public:
     TcpConnection(EventLoop *loop,
+                  uint64_t id,
                   const std::string &name,
                   int sockfd,
                   const InetAddress &localAddr,
@@ -60,6 +61,11 @@ public:
     // 连接销毁
     void connectDestroyed();
 
+    void enableInactiveRelease(int timeouts) // 开启非活跃连接超时销毁机制
+    {
+        _loop_->runInLoop(std::bind(&TcpConnection::enableInactiveReleaseInLoop, this, timeouts));
+    }
+
 private:
     void setState(StateE state) { _state_ = state; }
 
@@ -68,16 +74,22 @@ private:
     void handleWrite();
     void handlerClose();
     void handleError();
+    void handleEvent(); // 如果触发任意事件，则刷新定时任务
 
     // 在这个TcpConnection所属的EventLoop中发送数据
     void sendInLoop(const void *message, size_t len);
     void shutdownInLoop(); // 关闭连接
 
+    void enableInactiveReleaseInLoop(int timeouts); // 开启非活跃连接超时机制
+    void cancelInactiveReleaseInLoop();             // 关闭非活跃连接超时机制
+
 private:
     EventLoop *_loop_;
+    uint64_t _id_; // 一个连接的id
     const std::string _name_;
     std::atomic_int _state_; // 记录连接的状态
     bool _reading_;
+    bool _enable_inactive_release_; // 标识是否启动非活跃销毁机制，默认为false
 
     std::unique_ptr<Socket> _socket_;
     std::unique_ptr<Channel> _channel_;

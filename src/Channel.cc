@@ -18,7 +18,6 @@ Channel::Channel(EventLoop *loop, int fd)
 {
 }
 
-
 Channel::~Channel()
 {
 }
@@ -82,5 +81,10 @@ void Channel::HandlerEventWithGuard(Timestamp receiveTime)
     {
         if (_WriteCallback_)
             _WriteCallback_();
+    }
+
+    if (_EventCallback_)
+    {
+        _EventCallback_();
     }
 }

@@ -24,7 +24,9 @@ TcpServer::TcpServer(EventLoop *loop,
       _connectionCallback_(),
       _messageCallback_(),
       _nextConnId_(1),
-      _started_(0)
+      _started_(0),
+      _enable_inactive_release_(false),
+      _timeouts_(0)
 {
     _acceptor_->setNewConnectionCallback(std::bind(&TcpServer::newConnection, this,
                                                    std::placeholders::_1,
@@ -60,6 +62,8 @@ void TcpServer::start()
 // 有新连接到来的时候所调用的回调
 void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
 {
+    _nextConnId_++;
+
     // 先通过轮询算法获取一个subloop
     EventLoop *ioLoop = _threadPool_->getNextLoop();
     // 给连接起一个名字
@@ -85,9 +89,14 @@ void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
     conn->setConnectionCallback(_connectionCallback_);
     conn->setMessageCallback(_messageCallback_);
     conn->setWriteCompleteCallback(_writeCompleteCallback_);
-
     conn->setCloseCallback(
         std::bind(&TcpServer::removeConnection, this, std::placeholders::_1));
+
+    // 判断是否开启非活跃连接超时销毁机制
+    if (_enable_inactive_release_ == true)
+    {
+        conn->enableInactiveRelease(_timeouts_);
+    }
 
     ioLoop->runInLoop(std::bind(&TcpConnection::connectEstablished, conn));
 }

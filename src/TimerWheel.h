@@ -9,7 +9,6 @@
 #include "TimerTask.h"
 #include "Logger.h"
 #include "Channel.h"
-#include "EventLoop.h"
 
 // 秒级定时器
 class TimerWheel

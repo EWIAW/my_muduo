@@ -3,8 +3,6 @@
 #include <string.h>
 
 #include "EventLoop.h"
-#include "Channel.h"
-#include "Logger.h"
 
 // 防止一个线程创建多个eventloop thread_local技术
 __thread EventLoop *t_loopInThisThread = nullptr;
@@ -31,7 +29,8 @@ EventLoop::EventLoop()
       _poller_(Poller::newDefaultPoller(this)),
       _wakeupFd_(createEventFd()),
       _wakeupChannel_(new Channel(this, _wakeupFd_)),
-      _callingPendingFunctors_(false)
+      _callingPendingFunctors_(false),
+      _timer_wheel_(this)
 {
     LOG_DEBUG("EventLoop create %p in thread %d", this, _threadId_);
     if (t_loopInThisThread != nullptr)

@@ -18,11 +18,13 @@ static EventLoop *CheckLoopNotNull(EventLoop *loop)
 }
 
 TcpConnection::TcpConnection(EventLoop *loop,
+                             uint64_t id,
                              const std::string &nameArg,
                              int sockfd,
                              const InetAddress &localAddr,
                              const InetAddress &peerAddr)
     : _loop_(CheckLoopNotNull(loop)),
+      _id_(id),
       _name_(nameArg),
       _state_(kConnecting),
       _reading_(true),
@@ -36,6 +38,7 @@ TcpConnection::TcpConnection(EventLoop *loop,
     _channel_->SetCloseCallback(std::bind(&TcpConnection::handlerClose, this));
     _channel_->SetErrorCallback(std::bind(&TcpConnection::handleError, this));
     _channel_->SetWriteCallback(std::bind(&TcpConnection::handleWrite, this));
+    _channel_->SetEventCallback(std::bind(&TcpConnection::handleEvent, this));
 
     LOG_INFO("TcpConnection is conneceted : name : %s , fd : %d", _name_.c_str(), sockfd);
     _socket_->setKeepAlive(true);
@@ -240,4 +243,31 @@ void TcpConnection::handleError()
         err = optval;
     }
     LOG_ERROR("TcpConnection::handleError name : %s - SO_ERROR : %d", _name_.c_str(), err);
+}
+
+void TcpConnection::handleEvent() // 如果触发任意事件，则刷新定时任务
+{
+    if (_enable_inactive_release_ == true)
+    {
+        _loop_->TimerRefresh(_id_);
+    }
+}
+
+void TcpConnection::enableInactiveReleaseInLoop(int timeouts) // 开启非活跃连接超时机制
+{
+    _enable_inactive_release_ = true;
+    if (_loop_->TimerExist(_id_) == true)
+    {
+        return _loop_->TimerRefresh(_id_);
+    }
+    _loop_->TimerAdd(_id_, timeouts, std::bind(&TcpConnection::shutdown, this));
+}
+
+void TcpConnection::cancelInactiveReleaseInLoop() // 关闭非活跃连接超时机制
+{
+    _enable_inactive_release_ = false;
+    if (_loop_->TimerExist(_id_) == true)
+    {
+        _loop_->TimerCancel(_id_);
+    }
 }
