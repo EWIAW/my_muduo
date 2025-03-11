@@ -16,6 +16,7 @@
 
 class Channel;
 class Poller;
+class TimerWheel;
 
 class EventLoop : noncopyable
 {

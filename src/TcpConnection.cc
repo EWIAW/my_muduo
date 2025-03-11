@@ -160,6 +160,10 @@ void TcpConnection::connectDestroyed()
         setState(kDisconnected);
         _channel_->DisableAll();
         _connectionCallback_(shared_from_this());
+        if (_loop_->TimerExist(_id_) == true)
+        {
+            cancelInactiveReleaseInLoop();
+        }
     }
     _channel_->remove();
 }

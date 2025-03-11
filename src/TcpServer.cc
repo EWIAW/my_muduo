@@ -23,7 +23,7 @@ TcpServer::TcpServer(EventLoop *loop,
       _threadPool_(new EventLoopThreadPool(loop, _name_)),
       _connectionCallback_(),
       _messageCallback_(),
-      _nextConnId_(1),
+      _nextConnId_(0),
       _started_(0),
       _enable_inactive_release_(false),
       _timeouts_(0)
@@ -69,7 +69,6 @@ void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
     // 给连接起一个名字
     char buf[64] = {0};
     snprintf(buf, sizeof(buf) - 1, "-%s#%d", _ipPort_.c_str(), _nextConnId_);
-    _nextConnId_++;
     std::string connName = _name_ + buf;
 
     LOG_INFO("TcpServer::newConnection [%s] - new connection [%s] from %s",
@@ -84,13 +83,12 @@ void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
     }
     InetAddress localAddr(local);
 
-    TcpConnectionPtr conn(new TcpConnection(ioLoop, connName, sockfd, localAddr, peerAddr));
+    TcpConnectionPtr conn(new TcpConnection(ioLoop, _nextConnId_, connName, sockfd, localAddr, peerAddr));
     _connectionMap_[connName] = conn;
     conn->setConnectionCallback(_connectionCallback_);
     conn->setMessageCallback(_messageCallback_);
     conn->setWriteCompleteCallback(_writeCompleteCallback_);
-    conn->setCloseCallback(
-        std::bind(&TcpServer::removeConnection, this, std::placeholders::_1));
+    conn->setCloseCallback(std::bind(&TcpServer::removeConnection, this, std::placeholders::_1));
 
     // 判断是否开启非活跃连接超时销毁机制
     if (_enable_inactive_release_ == true)

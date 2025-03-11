@@ -29,6 +29,8 @@ TimerWheel::TimerWheel(EventLoop *loop)
       _loop_(loop),
       _timer_fd_channel_(new Channel(loop, _timer_fd_))
 {
+    _timer_fd_channel_->SetReadCallback(std::bind(&TimerWheel::OnTime,this));
+    _timer_fd_channel_->EnableReading();
 }
 
 TimerWheel::~TimerWheel()
