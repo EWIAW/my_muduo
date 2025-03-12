@@ -78,10 +78,10 @@ public:
     void Set_Index(int index) { _index_ = index; } // 设置channel当前连接的状态
 
     EventLoop *ownerloop() { return _loop_; } // 返回这个channel所属的EventLoop
-    void remove();
+    void remove();                            // 将channel从epoll模型中删除
 
 private:
-    void update();
+    void update(); // 更新channel，例如更新所监听的事件等
     void HandlerEventWithGuard(Timestamp receiveTime);
 
 private:

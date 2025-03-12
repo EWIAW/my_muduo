@@ -35,6 +35,7 @@ void Channel::update()
     _loop_->updateChannel(this);
 }
 
+// 将channel从epoll模型中删除
 void Channel::remove()
 {
     _loop_->removeChannel(this);
@@ -60,7 +61,7 @@ void Channel::HandlerEvent(Timestamp receiveTime) // ？？？
 void Channel::HandlerEventWithGuard(Timestamp receiveTime)
 {
     if ((_revents_ & EPOLLHUP) && !(_revents_ & EPOLLIN)) // EPOLLHUP说明对端关闭连接
-    {
+    {                                                     // !(_revents_ & EPOLLIN)说明对端无残留数据，可以直接关闭连接
         if (_CloseCallback_)
             _CloseCallback_();
     }
@@ -83,6 +84,7 @@ void Channel::HandlerEventWithGuard(Timestamp receiveTime)
             _WriteCallback_();
     }
 
+    // 发生任意事件后，都要执行的回调，这里其实是去调用定时器的功能，即刷新定时任务
     if (_EventCallback_)
     {
         _EventCallback_();

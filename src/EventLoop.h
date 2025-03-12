@@ -74,7 +74,7 @@ private:
     int _wakeupFd_;
     std::unique_ptr<Channel> _wakeupChannel_;
 
-    ChannelLists _activeChannels_;
+    ChannelLists _activeChannels_; // 存储事件就绪的channel
 
     std::atomic_bool _callingPendingFunctors_; // 判断当前loop是否有需要/正在执行的回调
     std::vector<Functor> _pendingFunctors_;    // 存储loop所有需要执行的回调
@@ -89,3 +89,4 @@ private:
 // 就需要将这个添加新连接操作函数queueInLoop到EventLoop中，但是此时EventLoop真正loop，而且才刚开始一秒
 // 还需要9秒后，epoll_wait才返回，所以这个时候处理新连接的函数就不能被及时运行，导致新连接一直在等
 // 这样新连接要9秒后才能连接成功，这样的做法对客户端不友好
+// 所以在这段时间内，要通过给_wakeupFd_写入数据，从而触发epoll_wait成功，后subloop去执行所有需要执行的回调

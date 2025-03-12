@@ -32,13 +32,13 @@ EPollPoller::~EPollPoller()
 // 进行epoll_wait的封装
 Timestamp EPollPoller::poll(int timeoutMs, ChannelLists *activeChannel)
 {
-    LOG_DEBUG("func = %s , fd total count : %d", __FUNCTION__, _events_.size());
+    LOG_DEBUG("func = %s , EventList fd total count : %d", __FUNCTION__, _events_.size());
     int numEvents = epoll_wait(_epollfd_, &*_events_.begin(), static_cast<int>(_events_.size()), timeoutMs);
     int saveErrno = errno; // 提前保存errno，以防万一
     Timestamp now(Timestamp::Now());
     if (numEvents > 0)
     {
-        LOG_INFO("epoll_wait success , event nums : %d", numEvents);
+        LOG_INFO("epoll_wait success , %d event is happen", numEvents);
         fillActiveChannel(numEvents, activeChannel);
         // 给_events_扩容，说明此时就绪的事件>=容量，需要扩容
         if (numEvents == _events_.size())
@@ -48,11 +48,11 @@ Timestamp EPollPoller::poll(int timeoutMs, ChannelLists *activeChannel)
     }
     else if (numEvents == 0)
     {
-        LOG_INFO("func = %s , time out!!!", __FUNCTION__);
+        LOG_INFO("func = %s , time out , NO event happen !!!", __FUNCTION__);
     }
     else
     {
-        if (saveErrno != EINTR)
+        if (saveErrno != EINTR) // 如果不是被信号中断的
         {
             errno = saveErrno;
             LOG_ERROR("epoll_wait failed , errno : %d , reason : %s", errno, strerror(errno));
@@ -96,7 +96,7 @@ void EPollPoller::removeChannel(Channel *channel)
     int fd = channel->fd();
     _channelmap_.erase(fd);
 
-    LOG_INFO("func = %s , fd = %d", __FUNCTION__, fd);
+    // LOG_INFO("func = %s , fd = %d", __FUNCTION__, fd);
 
     int index = channel->index();
     if (index == kAdded)
@@ -113,7 +113,7 @@ void EPollPoller::fillActiveChannel(int numEvents, ChannelLists *activeChannels)
     for (int i = 0; i < numEvents; i++)
     {
         Channel *channel = static_cast<Channel *>(_events_[i].data.ptr);
-        LOG_DEBUG("fd = %d", channel->fd());
+        // LOG_DEBUG("fd = %d", channel->fd());
         channel->SetRevents(_events_[i].events);
         activeChannels->push_back(channel);
     }
