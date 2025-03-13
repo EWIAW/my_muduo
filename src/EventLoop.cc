@@ -11,9 +11,9 @@ __thread EventLoop *t_loopInThisThread = nullptr;
 const int kPollTimeMs = 10000;
 
 // 创建wakeupfd，用来唤醒subloop来处理新的channel
-int createEventFd() // ？？？
+static int createEventFd() // ！！！
 {
-    int evtfd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
+    int evtfd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC); // 0代表初始计数器为0
     if (evtfd < 0)
     {
         LOG_DEBUG("create eventfd failed , errno : %d , reason : %s", errno, strerror(errno));
@@ -48,7 +48,7 @@ EventLoop::EventLoop()
 EventLoop::~EventLoop()
 {
     _wakeupChannel_->DisableAll();
-    _wakeupChannel_->remove();
+    _wakeupChannel_->remove(); // 从epoll模型中移除
     close(_wakeupFd_);
     t_loopInThisThread = nullptr;
 }
@@ -82,7 +82,7 @@ void EventLoop::quit()
     }
 }
 
-// 在当前loop中执行回调
+// 在当前loop中执行回调，添加一个任务到EventLoop中
 void EventLoop::runInLoop(Functor cb)
 {
     // LOG_DEBUG("EventLoop::runInLoop");

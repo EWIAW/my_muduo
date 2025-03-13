@@ -31,11 +31,15 @@ void Thread::start()
     sem_init(&sem, false, 0);
 
     // 开启线程
+    //从线程执行下面的代码
     _thread_ = std::shared_ptr<std::thread>(new std::thread([&]()
-                                                            {
+        {
         _tid_ = CurrentThread::tid();
         sem_post(&sem);
-        _func_(); }));
+        _func_(); 
+        }));
+    
+    //主线程执行这一行代码
     sem_wait(&sem);
 }
 

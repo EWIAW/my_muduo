@@ -80,7 +80,7 @@ private:
     std::vector<Functor> _pendingFunctors_;    // 存储loop所有需要执行的回调
     std::mutex _mutex_;
 
-    TimerWheel _timer_wheel_; // 一个EventLoop一个定时时间轮
+    TimerWheel _timer_wheel_; // 一个EventLoop一个定时器时间轮
 };
 // 我对_wakeupFd_的理解
 // 首先subloop线程一旦创建，就是无止境的loop(epoll_wait)，而且这里epoll_wait的超时时间是10秒

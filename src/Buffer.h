@@ -37,7 +37,7 @@ public:
     // 返回缓冲区中可读数据的起始地址
     const char *peek() const { return begin() + _readerIndex_; }
 
-    // 将buffer缓冲区里的数据向上交付    buffer -> onMessage
+    // 将buffer缓冲区里的数据向上交付    buffer -> onMessage回调函数
     void retrieve(size_t len)
     {
         if (len < readableBytes()) // 说明应用层只读取了一部分数据

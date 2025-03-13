@@ -14,7 +14,7 @@ public:
 
     int fd() const { return _sockfd_; }
 
-    // 以下三个函数自由listenfd使用
+    // 以下三个函数给listenfd使用
     void bindAddress(const InetAddress &localaddr);
     void listen();
     int accept(InetAddress *peeraddr);

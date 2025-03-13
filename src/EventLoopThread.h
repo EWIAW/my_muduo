@@ -1,3 +1,4 @@
+// 将线程和EventLoop绑定
 #pragma once
 #include <mutex>
 #include <condition_variable>

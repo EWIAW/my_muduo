@@ -29,7 +29,7 @@ TimerWheel::TimerWheel(EventLoop *loop)
       _loop_(loop),
       _timer_fd_channel_(new Channel(loop, _timer_fd_))
 {
-    _timer_fd_channel_->SetReadCallback(std::bind(&TimerWheel::OnTime,this));
+    _timer_fd_channel_->SetReadCallback(std::bind(&TimerWheel::OnTime, this));
     _timer_fd_channel_->EnableReading();
 }
 
@@ -67,7 +67,7 @@ void TimerWheel::RemoveWeakPtrMap(uint64_t id) // 从_weak_ptr_map_中移除任�
     _weak_ptr_map_.erase(id);
 }
 
-void TimerWheel::WheelRunOne() // 时间轮向后走一步
+void TimerWheel::WheelRunOne() // 时间轮向后走一步，走一步后，执行该位置的所有定时任务
 {
     _tick_ = (_tick_ + 1) % _capacity_;
     _wheel_[_tick_].clear();
