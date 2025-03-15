@@ -112,6 +112,5 @@ void TcpServer::removeConnectionInLoop(const TcpConnectionPtr &conn)
 
     _connectionMap_.erase(conn->name());
     EventLoop *ioLoop = conn->getLoop();
-    ioLoop->queueInLoop(
-        std::bind(&TcpConnection::connectDestroyed, conn));
+    ioLoop->queueInLoop(std::bind(&TcpConnection::connectDestroyed, conn));
 }

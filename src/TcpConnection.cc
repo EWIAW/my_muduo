@@ -40,14 +40,14 @@ TcpConnection::TcpConnection(EventLoop *loop,
     _channel_->SetWriteCallback(std::bind(&TcpConnection::handleWrite, this));
     _channel_->SetEventCallback(std::bind(&TcpConnection::handleEvent, this));
 
-    LOG_INFO("TcpConnection is conneceted : name : %s , fd : %d", _name_.c_str(), sockfd);
+    LOG_INFO("TcpConnection is conneceted : name : %s , id : %d , fd : %d", _name_.c_str(), _id_, sockfd);
     _socket_->setKeepAlive(true);
 }
 
 TcpConnection::~TcpConnection()
 {
-    LOG_INFO("TcpConnection is conneceted : name : %s , fd : %d , state : %d",
-             _name_.c_str(), _socket_->fd(), (int)_state_);
+    LOG_INFO("TcpConnection is conneceted : name : %s , id : %d , fd : %d , state : %d",
+             _name_.c_str(), _id_, _socket_->fd(), (int)_state_);
 }
 
 void TcpConnection::send(const std::string &buf) // 发送数据
@@ -68,14 +68,14 @@ void TcpConnection::send(const std::string &buf) // 发送数据
 // 在subloop里面发送数据
 void TcpConnection::sendInLoop(const void *data, size_t len)
 {
-    // 发送数据的过程可以分为两种情况：可以直接往sockfd写数据，往Buffer里写数据
+    // 发送数据的过程可以分为两种情况：可以直接往sockfd写数据 或 往Buffer里写数据
     ssize_t nwrote = 0;     // 已经写入的数据的长度
     size_t remaining = len; // 未写入的数据的长度
     bool faultError = false;
 
     if (_state_ == kDisconnected)
     {
-        LOG_ERROR("The TcpConnection is disconnected , give up writing!");
+        LOG_ERROR("The TcpConnection is disconnected , give up writing！！！");
         return;
     }
 

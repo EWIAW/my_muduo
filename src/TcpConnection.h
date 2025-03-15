@@ -85,9 +85,9 @@ private:
 
 private:
     EventLoop *_loop_;
-    uint64_t _id_; // 一个连接的id
-    const std::string _name_;
-    std::atomic_int _state_; // 记录连接的状态
+    uint64_t _id_;            // 一个连接的id
+    const std::string _name_; // 连接的名字
+    std::atomic_int _state_;  // 记录连接的状态
     bool _reading_;
     bool _enable_inactive_release_; // 标识是否启动非活跃销毁机制，默认为false
 
@@ -97,7 +97,7 @@ private:
     const InetAddress _localAddr_; // 指的是服务端的地址
     const InetAddress _peerAddr_;  // 指的是客户端的地址
 
-    // 下面五个回调是TcpServer设置给T产品Connection的
+    // 下面五个回调是TcpServer设置给TcpConnection的
     ConnectionCallback _connectionCallback_; // 连接状态变更时调用的回调
     CloseCallback _closeCallback_;
     WriteCompleteCallback _writeCompleteCallback_;
