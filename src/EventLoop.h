@@ -56,6 +56,8 @@ public:
     void TimerCancel(uint64_t id) { _timer_wheel_.TimerTaskCancel(id); }
     bool TimerExist(uint64_t id) { return _timer_wheel_.TimerTaskIsExist(id); }
 
+    int GetTimerFd() { return _timer_wheel_.GetTimerFd(); } // 获取该EventLoop的定时器的fd
+
 private:
     void handlerRead();      // 用于wakeupFd的读事件就绪回调
     void doPendingFunctor(); // 执行已经存储好的回调

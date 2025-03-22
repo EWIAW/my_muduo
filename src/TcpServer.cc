@@ -59,7 +59,7 @@ void TcpServer::start()
     }
 }
 
-// 有新连接到来的时候所调用的回调
+// 有新连接到来的时候所调用的回调，mainloop的listenfd监听到有连接到来，就会调用这个函数
 void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
 {
     _nextConnId_++;
@@ -84,7 +84,9 @@ void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
     InetAddress localAddr(local);
 
     TcpConnectionPtr conn(new TcpConnection(ioLoop, _nextConnId_, connName, sockfd, localAddr, peerAddr));
-    _connectionMap_[connName] = conn;
+    _connectionMap_[connName] = conn; // 这里connectionMap里面使用了shared_ptr引用着TcpConnection对象，
+    // 所以即使上一行代码的shared_ptr出作用域了，导致引用计数--，也不会导致TcpConnection对象被销毁
+
     conn->setConnectionCallback(_connectionCallback_);
     conn->setMessageCallback(_messageCallback_);
     conn->setWriteCompleteCallback(_writeCompleteCallback_);
@@ -101,8 +103,7 @@ void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
 
 void TcpServer::removeConnection(const TcpConnectionPtr &conn)
 {
-    _loop_->runInLoop(
-        std::bind(&TcpServer::removeConnectionInLoop, this, conn));
+    _loop_->runInLoop(std::bind(&TcpServer::removeConnectionInLoop, this, conn));
 }
 
 void TcpServer::removeConnectionInLoop(const TcpConnectionPtr &conn)

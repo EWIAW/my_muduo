@@ -126,10 +126,13 @@ void TcpConnection::sendInLoop(const void *data, size_t len)
 }
 
 // 关闭连接
-void TcpConnection::shutdown()
+void TcpConnection::shutdown() // 这个函数底层调用的是::shutdown(fd,SHUT_WR)，即告诉对端，我不在发送给消息了，是一种半关闭的操作
 {
+    // LOG_DEBUG("shutdown");
+    // LOG_DEBUG("%d", (int)_state_);
     if (_state_ == kConnected)
     {
+        // LOG_DEBUG("shutdown in if");
         setState(kDisconnecting);
         _loop_->runInLoop(std::bind(&TcpConnection::shutdownInLoop, this));
     }
@@ -147,7 +150,7 @@ void TcpConnection::shutdownInLoop()
 void TcpConnection::connectEstablished()
 {
     setState(kConnected);
-    _channel_->tie(shared_from_this());
+    _channel_->tie(shared_from_this()); // 确保回调期间，TcpConnecion的生命周期一直都存在
     _channel_->EnableReading();
     _connectionCallback_(shared_from_this());
 }
@@ -160,10 +163,10 @@ void TcpConnection::connectDestroyed()
         setState(kDisconnected);
         _channel_->DisableAll();
         _connectionCallback_(shared_from_this());
-        if (_loop_->TimerExist(_id_) == true)
-        {
-            cancelInactiveReleaseInLoop();
-        }
+    }
+    if (_loop_->TimerExist(_id_) == true) // 取消关闭该TcpConnection的定时任务
+    {
+        cancelInactiveReleaseInLoop();
     }
     _channel_->remove();
 }
@@ -275,3 +278,7 @@ void TcpConnection::cancelInactiveReleaseInLoop() // 关闭非活跃连接超时
         _loop_->TimerCancel(_id_);
     }
 }
+
+// 当调用shutdown函数后，会发生什么
+// 调用shutdown后本质是向对端发送FIN报文，关闭写连接，告诉对端，我不再给你发送数据了，但是还可以接收对端的数据
+// 是一种半关闭的状态，当对端真正调用close的时候，就会触发handleclose事件，彻底关闭连接，并销毁释放TcpConecion

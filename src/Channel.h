@@ -96,13 +96,15 @@ private:
     int _revents_; // 返回fd就绪的事件
     int _index_;   // 用于帮助poller高效管理channel，例如index为-1，代表channel未加入到epoll模型中
 
-    std::weak_ptr<void> _tie_; // ？？？
-    bool _tied_;               // ？？？
+    std::weak_ptr<void> _tie_; // 用于延长TcpConnection的生命周期，确保在TcpConnection回调期间，TcpConnection一直都存在
+    bool _tied_;               // 用于辅助_tie_的使用
 
     // 当事件发生时，需要调用的回调
     ReadEventCallback _ReadCallback_;
     EventCallback _WriteCallback_;
     EventCallback _CloseCallback_;
     EventCallback _ErrorCallback_;
-    EventCallback _EventCallback_; // 触发任何事件后的回调
+    EventCallback _EventCallback_; // 触发任何事件后的回调，用于操作定时任务，延长定时任务的销毁时间
 };
+//_tie_之所以要使用weak_ptr，是因为要防止循环引用的问题，如果使用shared_ptr，则会出现循环引用的问题
+// 循环引用链：TcpConnection -> unique_ptr -> Channel -> shared_ptr -> TcpConnection 导致循环引用

@@ -18,13 +18,15 @@ class TimerWheel
 
     static const uint32_t capacity = 60; // 时间轮的长度
 public:
-    TimerWheel(EventLoop* loop);
+    TimerWheel(EventLoop *loop);
     ~TimerWheel();
 
     void TimerTaskAdd(uint64_t id, uint32_t delay_time, const OnTimerTask &cb); // 添加一个定时任务
     void TimerTaskRefresh(uint64_t id);                                         // 刷新定时任务
     void TimerTaskCancel(uint64_t id);                                          // 取消定时任务
     bool TimerTaskIsExist(uint64_t id);                                         // 判断定时任务还在不在，true代表在
+
+    int GetTimerFd(); // 获取定时器的fd
 
 private:
     void RemoveWeakPtrMap(uint64_t id); // 从_weak_ptr_map_中移除任务

@@ -38,7 +38,7 @@ public:
     ~TcpServer();
 
     void setThreadInitCallback(const ThreadInitCallback &cb) { _threadInitCallback_ = cb; }
-    void setConnectionCallback(const ConnectionCallback &cb) { _connectionCallback_ = cb; }
+    void setConnectionCallback(const ConnectionCallback &cb) { _connectionCallback_ = cb; } // 当连接状态发生改变时所调用的回调
     // void setCloseCallback(const CloseCallback &cb) { _closeCallback_ = std::move(cb); }
     void setWriteCompleteCallback(const WriteCompleteCallback &cb) { _writeCompleteCallback_ = cb; }
     void setMessageCallback(const MessageCallback &cb) { _messageCallback_ = cb; }

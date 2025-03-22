@@ -6,6 +6,7 @@
 #include "EPollPoller.h"
 #include "Logger.h"
 #include "Channel.h"
+#include "EventLoop.h"
 
 // 对应channel的_index成员变量
 const int kNew = -1;    // channel未添加到poller中
@@ -32,13 +33,23 @@ EPollPoller::~EPollPoller()
 // 进行epoll_wait的封装
 Timestamp EPollPoller::poll(int timeoutMs, ChannelLists *activeChannel)
 {
-    LOG_DEBUG("func = %s , EventList fd total count : %d", __FUNCTION__, _events_.size());
+    // LOG_DEBUG("func = %s , EventList fd total count : %d", __FUNCTION__, _events_.size());
     int numEvents = epoll_wait(_epollfd_, &*_events_.begin(), static_cast<int>(_events_.size()), timeoutMs);
     int saveErrno = errno; // 提前保存errno，以防万一
     Timestamp now(Timestamp::Now());
+
     if (numEvents > 0)
     {
-        LOG_INFO("epoll_wait success , %d event is happen", numEvents);
+        // 这里进行判断，如果仅仅只有定时器事件发生了，则不打印日志，避免日志刷屏
+        if (numEvents == 1 && (((Channel *)_events_[0].data.ptr)->fd() == _ownerloop_->GetTimerFd()))
+        {
+            ; // 什么都不做，避免定时的事件就绪导致日志刷屏
+        }
+        else // 如果不是定时器的fd就绪，则可以输出日志
+        {
+            LOG_DEBUG("func = %s , EventList fd total count : %d", __FUNCTION__, _events_.size());
+            LOG_INFO("epoll_wait success , %d event is happen", numEvents);
+        }
         fillActiveChannel(numEvents, activeChannel);
         // 给_events_扩容，说明此时就绪的事件>=容量，需要扩容
         if (numEvents == _events_.size())

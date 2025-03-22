@@ -22,7 +22,7 @@ Channel::~Channel()
 {
 }
 
-void Channel::tie(const std::shared_ptr<void> &obj) // ？？？
+void Channel::tie(const std::shared_ptr<void> &obj) // 在构建TcpConnection的时间，将TcpConnection的shared_ptr给到_tie_，用于回调时使用
 {
     _tie_ = obj;
     _tied_ = true;
@@ -42,11 +42,11 @@ void Channel::remove()
 }
 
 // channel得到poller通知后，处理事件
-void Channel::HandlerEvent(Timestamp receiveTime) // ？？？
+void Channel::HandlerEvent(Timestamp receiveTime) // 在处理事件之前，要先判断是否启动了防御机制，即if(_tied_)判断
 {
     if (_tied_)
     {
-        std::shared_ptr<void> guard = _tie_.lock();
+        std::shared_ptr<void> guard = _tie_.lock(); // 确保在调用回调期间，TcpConncection的生命周期一直都在
         if (guard)
         {
             HandlerEventWithGuard(receiveTime);
@@ -60,7 +60,7 @@ void Channel::HandlerEvent(Timestamp receiveTime) // ？？？
 
 void Channel::HandlerEventWithGuard(Timestamp receiveTime)
 {
-    if ((_revents_ & EPOLLHUP) && !(_revents_ & EPOLLIN)) // EPOLLHUP说明对端关闭连接
+    if ((_revents_ & EPOLLHUP) && !(_revents_ & EPOLLIN)) // EPOLLHUP说明对端关闭连接，即调用了close
     {                                                     // !(_revents_ & EPOLLIN)说明对端无残留数据，可以直接关闭连接
         if (_CloseCallback_)
             _CloseCallback_();
@@ -90,3 +90,12 @@ void Channel::HandlerEventWithGuard(Timestamp receiveTime)
         _EventCallback_();
     }
 }
+// 在HandlerEvent函数中，我所理解的防御机制就是，开启了 当回调TcpConnection的函数的时候，我要确保这个TcpConnecion的生命周期是要一直存在的
+// 这里我之前遗留的问题是：
+// muduo库是一个one loop per thread思想的网络库，即一个线程一个循环，每个线程所属一个EventLoop，
+// 每个EventLoop都管理着自己的TcpConnecion，按道理来说，在执行HandleEvent回调的时候，这个TcpConnction连接是不会被销毁的，
+// 为什么要进行一个_tied_的判断呢，我觉得这样会很奇怪，因为在执行回调的时候，按道理来说，是不可能会出现TcpConnection被销毁的。
+//
+// 我给出的理解是，这样的做法是一个防御性编程，因为按正常来说，上面所说的情况是不会发生的，
+// 但是有可能是muduo库的使用者由于编程错误，导致在别的EventLoop中调用了别的EventLoop的shutdown，而这个shutdown又没有添加到该EventLoop的任务队列中
+// 导致在别的EventLoop中销毁了TcpConnecion。

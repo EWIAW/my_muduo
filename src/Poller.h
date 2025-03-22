@@ -37,6 +37,6 @@ protected:
     using ChannelMap = std::unordered_map<int, Channel *>;
     ChannelMap _channelmap_;
 
-private:
+// private:
     EventLoop *_ownerloop_; // 一个poller所属一个EventLoop
 };

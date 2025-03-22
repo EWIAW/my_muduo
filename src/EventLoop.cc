@@ -82,7 +82,7 @@ void EventLoop::quit()
     }
 }
 
-// 在当前loop中执行回调，添加一个任务到EventLoop中
+// 需要在当前EventLoop中执行回调，如果是在属于自己的EventLoop中，则直接执行回调，否则，将回调加入的任务函数对了中
 void EventLoop::runInLoop(Functor cb)
 {
     // LOG_DEBUG("EventLoop::runInLoop");

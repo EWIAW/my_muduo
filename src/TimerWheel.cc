@@ -62,6 +62,12 @@ bool TimerWheel::TimerTaskIsExist(uint64_t id) // 判断定时任务还在不在
     return true;
 }
 
+int TimerWheel::GetTimerFd() // 获取定时器的fd
+{
+    return _timer_fd_;
+}
+
+
 void TimerWheel::RemoveWeakPtrMap(uint64_t id) // 从_weak_ptr_map_中移除任务
 {
     _weak_ptr_map_.erase(id);
