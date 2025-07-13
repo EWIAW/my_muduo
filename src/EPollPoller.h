@@ -34,7 +34,7 @@ private:
 private:
     // 用于初始化EventList的大小
     static const int kInitEventListSize = 16;
-    int _epollfd_;      // epoll模型的fd
+    int _epollfd_;      // epoll_create的返回值 epoll模型的fd
     EventList _events_; // 通过epoll_wait所得到的就绪事件都存储再这个vector中
 };
 // using EventList = std::vector<struct epoll_event>;

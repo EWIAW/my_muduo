@@ -47,8 +47,8 @@ EventLoop::EventLoop()
 
 EventLoop::~EventLoop()
 {
-    _wakeupChannel_->DisableAll();
-    _wakeupChannel_->remove(); // 从epoll模型中移除
+    _wakeupChannel_->DisableAll(); // 从epoll模型删除之前，需要停止监听事件
+    _wakeupChannel_->remove();     // 从epoll模型中移除
     close(_wakeupFd_);
     t_loopInThisThread = nullptr;
 }
@@ -82,7 +82,7 @@ void EventLoop::quit()
     }
 }
 
-// 需要在当前EventLoop中执行回调，如果是在属于自己的EventLoop中，则直接执行回调，否则，将回调加入的任务函数对了中
+// 需要在该EventLoop中执行回调，如果是在属于自己的EventLoop中，则直接执行回调，否则，将回调加入的任务函数队列中
 void EventLoop::runInLoop(Functor cb)
 {
     // LOG_DEBUG("EventLoop::runInLoop");

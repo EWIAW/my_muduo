@@ -69,10 +69,11 @@ private:
     std::atomic_bool _quit_;    // 标识退出loop循环
     const pid_t _threadId_;     // 标识这个loop属于那个线程
 
-    Timestamp _pollReturnTIme_; // 记录poll(epoll_wait)函数被调用的时间
-    std::unique_ptr<Poller> _poller_;
+    Timestamp _pollReturnTIme_;       // 记录poll(epoll_wait)函数被调用的时间
+    std::unique_ptr<Poller> _poller_; // 一个循环一个线程，一个epoll模型
 
     // 当mainloop获取一个新用户的channel时，通过轮询算法选择一个subloop，通过该成员变量唤醒subloop处理channel
+    // 用于在别的eventloop中唤醒这个eventloop
     int _wakeupFd_;
     std::unique_ptr<Channel> _wakeupChannel_;
 
@@ -87,8 +88,10 @@ private:
 // 我对_wakeupFd_的理解
 // 首先subloop线程一旦创建，就是无止境的loop(epoll_wait)，而且这里epoll_wait的超时时间是10秒
 // 如果在这10秒内，没有channel发生事件就绪，
-// 然后，此时mainloop有一个新连接过来了，mainloop给这个新连接的fd封装成channel后，需要将他添加到poller中，
+// 然后，此时mainloop有一个新连接过来了，mainloop给这个新连接的fd封装成channel后，需要将它添加到poller中，
 // 就需要将这个添加新连接操作函数queueInLoop到EventLoop中，但是此时EventLoop真正loop，而且才刚开始一秒
 // 还需要9秒后，epoll_wait才返回，所以这个时候处理新连接的函数就不能被及时运行，导致新连接一直在等
 // 这样新连接要9秒后才能连接成功，这样的做法对客户端不友好
 // 所以在这段时间内，要通过给_wakeupFd_写入数据，从而触发epoll_wait成功，后subloop去执行所有需要执行的回调
+
+// 上面这只是举一个小例子，如果有任何上面所说的可能，都需要用这种方式去唤醒线程，及时处理回调任务

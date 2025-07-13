@@ -41,7 +41,7 @@ TcpConnection::TcpConnection(EventLoop *loop,
     _channel_->SetEventCallback(std::bind(&TcpConnection::handleEvent, this));
 
     LOG_INFO("TcpConnection is conneceted : name : %s , id : %d , fd : %d", _name_.c_str(), _id_, sockfd);
-    _socket_->setKeepAlive(true);
+    _socket_->setKeepAlive(true); // 开启系统自带的保活机制
 }
 
 TcpConnection::~TcpConnection()
@@ -150,9 +150,9 @@ void TcpConnection::shutdownInLoop()
 void TcpConnection::connectEstablished()
 {
     setState(kConnected);
-    _channel_->tie(shared_from_this()); // 确保回调期间，TcpConnecion的生命周期一直都存在
+    _channel_->tie(shared_from_this()); // 开启tie机制，确保回调期间，TcpConnecion的生命周期一直都存在
     _channel_->EnableReading();
-    _connectionCallback_(shared_from_this());
+    _connectionCallback_(shared_from_this()); // 连接完成后，调用连接状态变更回调
 }
 
 // 连接销毁
@@ -231,7 +231,7 @@ void TcpConnection::handlerClose()
     _channel_->DisableAll();
 
     TcpConnectionPtr connPtr(shared_from_this());
-    _connectionCallback_(connPtr); // 执行连接关闭回调
+    _connectionCallback_(connPtr); // 执行连接状态变更回调
     _closeCallback_(connPtr);
 }
 

@@ -33,7 +33,7 @@ public:
     void SetErrorCallback(EventCallback cb) { _ErrorCallback_ = std::move(cb); }
     void SetEventCallback(EventCallback cb) { _EventCallback_ = std::move(cb); }
 
-    // 防止channel被收到remove掉，channel还在执行回调
+    // 防止channel被remove掉后，channel还在执行回调
     void tie(const std::shared_ptr<void> &); // ？？？
 
     int fd() const { return _fd_; }
@@ -85,19 +85,19 @@ private:
     void HandlerEventWithGuard(Timestamp receiveTime);
 
 private:
-    // 保存事件可读还是可写的状态
+    // 保存channel所关心的事件
     static const int kNoneEvent;  // 代表该channel没有监听的事件
     static const int kReadEvent;  // 代表该channel监听读事件
     static const int kWriteEvent; // 代表该channel监听写事件
 
-    EventLoop *_loop_; // 这个channel所属那个循环
+    EventLoop *_loop_; // 这个channel所属那个eventloop循环
     const int _fd_;
     int _events_;  // 注册fd所监听的事件
     int _revents_; // 返回fd就绪的事件
     int _index_;   // 用于帮助poller高效管理channel，例如index为-1，代表channel未加入到epoll模型中
 
     std::weak_ptr<void> _tie_; // 用于延长TcpConnection的生命周期，确保在TcpConnection回调期间，TcpConnection一直都存在
-    bool _tied_;               // 用于辅助_tie_的使用
+    bool _tied_;               // 用于辅助_tie_的使用，标记是否启用tie保护机制
 
     // 当事件发生时，需要调用的回调
     ReadEventCallback _ReadCallback_;

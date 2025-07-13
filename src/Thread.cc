@@ -27,7 +27,7 @@ Thread::~Thread()
 void Thread::start()
 {
     _start_ = true;
-    sem_t sem; // 这里使用信号量的原因是以防万一，因为主线程创建一个新线程后，有可能去访问新线程的pid
+    sem_t sem; // 这里使用信号量的原因是以防万一，因为主线程创建一个新线程后，有可能去访问新线程的pid，但是这个时候，新线程的pid可能还没缓存好
     sem_init(&sem, false, 0);
 
     // 开启线程

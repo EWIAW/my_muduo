@@ -3,6 +3,7 @@
 
 #include "Buffer.h"
 
+// 使用readv的好处是，仅需要一次系统调用，就能将fd中的数据全部读取上来，减少系统调用的次数
 ssize_t Buffer::readfd(int fd, int *saveErrno) // 从fd上读取数据
 {
     // 临时的缓冲区，如果从fd上读上来的数据长度超过了buffer中的writealbe，则将剩余的数据读到extrabuffer中，

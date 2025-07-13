@@ -38,7 +38,7 @@ TcpServer::~TcpServer()
     for (auto &item : _connectionMap_)
     {
         TcpConnectionPtr conn(item.second);
-        item.second.reset();
+        item.second.reset(); // ？？？
 
         conn->getLoop()->runInLoop(std::bind(&TcpConnection::connectDestroyed, conn));
     }
