@@ -70,7 +70,7 @@ private:
 
     ConnectionCallback _connectionCallback_; // 连接状态变更时发生的回调
     // CloseCallback _closeCallback_;
-    WriteCompleteCallback _writeCompleteCallback_;
+    WriteCompleteCallback _writeCompleteCallback_; // 写操作完成后回调
     MessageCallback _messageCallback_;
 
     ThreadInitCallback _threadInitCallback_;

@@ -10,7 +10,8 @@ public:
     EchoServer(EventLoop *loop,
                const InetAddress &addr,
                const std::string &name)
-        : server_(loop, addr, name), loop_(loop)
+        : server_(loop, addr, name),
+          loop_(loop)
     {
         // 注册回调函数
         server_.setConnectionCallback(
@@ -53,6 +54,7 @@ private:
         // conn->shutdown(); // 写端   EPOLLHUP =》 closeCallback_
     }
 
+private:
     EventLoop *loop_;
     TcpServer server_;
 };

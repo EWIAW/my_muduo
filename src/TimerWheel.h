@@ -36,7 +36,7 @@ private:
 
     void TimerTaskAddInLoop(uint64_t id, uint32_t delay_time, const OnTimerTask &cb); // 添加定时任务 由 EventLoop来完成
     void TimerTaskRefreshInLoop(uint64_t id);                                         // 刷新定时任务 由 EventLoop来完成
-    void TimerTaskCancelInLoop(uint64_t id);                                          // 取消定时任务 由EventLoop来完成
+    void TimerTaskCancelInLoop(uint64_t id);                                          // 取消定时任务 由 EventLoop来完成
 
 private:
     int _timer_fd_;      // 通过timerfd_create系统调用创建定时器的返回值

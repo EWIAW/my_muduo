@@ -38,7 +38,7 @@ TcpServer::~TcpServer()
     for (auto &item : _connectionMap_)
     {
         TcpConnectionPtr conn(item.second);
-        item.second.reset(); // ？？？
+        item.second.reset(); // 释放每个TcpConnection连接
 
         conn->getLoop()->runInLoop(std::bind(&TcpConnection::connectDestroyed, conn));
     }
@@ -55,7 +55,7 @@ void TcpServer::start()
     if (_started_++ == 0)
     {
         _threadPool_->start(_threadInitCallback_);
-        _loop_->runInLoop(std::bind(&Acceptor::listen, _acceptor_.get()));
+        _loop_->runInLoop(std::bind(&Acceptor::listen, _acceptor_.get())); // 本质上是调用系统调用listen，开始监听新连接，并且感谢listen套接字读事件
     }
 }
 

@@ -1,6 +1,7 @@
 // 为什么要将poller层抽象出来
 // 因为要给用户提供两种不同IO多路复用的方法：epoll和poll
 // 通过使用抽象类，来实现多态，实现可以使用两种不同的IO多路复用的方法
+// 但是这里我只实现了epoll的方式
 #pragma once
 
 #include <vector>
